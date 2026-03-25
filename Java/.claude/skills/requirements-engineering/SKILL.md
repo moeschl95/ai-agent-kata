@@ -265,6 +265,8 @@ When the user accepts the implementation and the task transitions to `done`, the
 
 **Date:** YYYY-MM-DD
 
+**Model:** <model name>
+
 ---
 
 ## What Was Implemented
