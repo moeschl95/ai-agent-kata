@@ -195,6 +195,10 @@ Transition rules:
 - **Never start without an explicit implementation request.** Approval alone does not trigger
   implementation. Wait for a clear signal: "implement", "build it", "start work", etc.
 - **Never write production code without a failing test first.** TDD is mandatory per `AGENTS.md`.
+- **Follow project code conventions.** Before writing any Java code, consult
+  [`.claude/conventions/CODE_CONVENTIONS.md`](../../../.claude/conventions/CODE_CONVENTIONS.md):
+  `final` on all parameters, Javadoc on every public class/method, early exits over `if-else`, and
+  `List`/`Set`/`Map` instead of plain arrays.
 - **Do not modify `Item.java`.** It is an immutable dependency (the kata's "goblin" rule).
 - **Keep domain classes annotation-free.** Spring or framework annotations belong only in
   `@Configuration` classes, not in `GildedRose.java`, `Item.java`, or the updater hierarchy.

@@ -175,3 +175,15 @@ This demonstrates the Open/Closed Principle has been achieved.
 - Explain *why* a pattern fits before showing any code.
 - Show diffs or before/after snippets rather than full-file rewrites where possible.
 - If the user seems unfamiliar with a pattern, give a one-sentence plain-language summary before the technical detail.
+
+---
+
+## Code Conventions
+
+All refactored code must comply with the project conventions defined in
+[`.claude/conventions/CODE_CONVENTIONS.md`](../../../.claude/conventions/CODE_CONVENTIONS.md).
+Key rules:
+- `final` on every parameter
+- Javadoc on every `public` class, interface, record, and method
+- Early exits (guard clauses) instead of `else` chains
+- `List`/`Set`/`Map` instead of plain arrays
