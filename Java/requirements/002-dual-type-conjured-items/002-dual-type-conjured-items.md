@@ -1,6 +1,6 @@
 # 002 — Dual-Type Conjured Items
 
-**Status:** implemented
+**Status:** done
 
 ---
 
@@ -88,6 +88,7 @@ boundary cases (quality at 49, quality at 1 after sell-by, etc.) without introdu
 | Task | Overlap |
 |------|---------|
 | 001-item-pricing-feature | Both tasks touch `ItemUpdaterFactory.java`. Task 001 reads the `SULFURAS` constant; task 002 adds logic to `forItem()`. No merge conflict, but coordinate if both are worked on simultaneously. |
+| 003-spring-boot-migration | Task 003 creates a Spring `@Configuration` that wires `GildedRose` (which internally uses `ItemUpdaterFactory`) as a Spring bean. Task 002's changes to `forItem()` must be present in the codebase before 003 is built. Sequencing dependency only — no code conflict expected. |
 
 ---
 
@@ -99,3 +100,5 @@ boundary cases (quality at 49, quality at 1 after sell-by, etc.) without introdu
 | 2026-03-25 | ready-for-development | Approved by user |
 | 2026-03-25 | in-progress | Implementation started |
 | 2026-03-25 | implemented | ConjuredDecorator pattern implemented; all 34 tests pass |
+| 2026-03-25 | done | Approved by user; 97.5% line coverage, 92.5% branch coverage |
+| 2026-03-25 | implemented | Conflict noted with 003-spring-boot-migration: Spring wiring depends on ItemUpdaterFactory changes from this task |
