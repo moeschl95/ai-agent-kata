@@ -66,6 +66,12 @@ The `PricingService.priceFor(Item)` signature requires an `Item` instance, so th
 will look up the item by name in `GildedRose.items` before calling the service. If the shop holds
 multiple items with the same name, the first match is used.
 
+**Conflict noted with 006 (`006-in-memory-item-persistence`, status: `funnel`)**: task 006
+introduces a Spring Data JPA repository that `GildedRose` uses to load and persist items.
+`@WebMvcTest` slice tests for this task mock `GildedRose` and are unaffected. Full integration
+tests, however, will require the repository to be seeded. Task 006 should be implemented
+**before** task 004 to avoid rework at the integration-test level.
+
 ---
 
 ## Changelog
@@ -75,3 +81,4 @@ multiple items with the same name, the first match is used.
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
 | 2026-03-25 | ready-for-development | Conflict noted with 005-item-state-projection: both touch ShopController |
+| 2026-03-25 | ready-for-development | Conflict noted with 006-in-memory-item-persistence: integration tests depend on persistence layer |

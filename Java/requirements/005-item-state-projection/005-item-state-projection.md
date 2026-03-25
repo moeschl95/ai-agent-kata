@@ -70,6 +70,10 @@ endpoint to it. To avoid conflicts, task 005 must be implemented **after** task 
 If implemented concurrently, the `ShopController` and `@WebMvcTest` test class will require
 careful merging.
 
+**Conflict noted with 006 (`006-in-memory-item-persistence`, status: `funnel`)**: Task 005 reads
+`GildedRose.items` to look up items for projection. Task 006 keeps that field intact
+(backward-compatible design), so no breaking change. Recommended order: 006 → 004 → 005.
+
 ### Implementation note
 `ProjectionService` should work by creating a temporary `GildedRose` instance (or directly using
 `ItemUpdaterFactory`) with a defensive copy of the target item, running the updater `n` times,
@@ -83,3 +87,4 @@ and returning the result — keeping the original `GildedRose` bean's state unto
 |------|--------|------|
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-25 | ready-for-development | Conflict noted with 006-in-memory-item-persistence: GildedRose.items field preserved; recommended order 006 → 004 → 005 |
