@@ -122,6 +122,37 @@ See the `bug-workflow` skill for the full workflow, file template, and status re
 
 ---
 
+## Architecture Decision Record (ADR) Workflow (MANDATORY)
+
+When a significant architecture decision is needed, it must be proposed, approved, documented, and then implemented.
+
+**Never implement a significant architecture change without explicit approval.**
+
+### What Requires an ADR
+
+An ADR is needed for:
+- Major package/module restructuring
+- Introducing new layers or removing layers
+- Significant pattern changes (e.g., flat package → layered architecture)
+- Restructuring core components
+- Changes that affect multiple files across different packages
+- Changes to fundamental design principles or patterns
+
+### ADR Process
+
+1. **Ask permission first** — Do not assume approval is delegated. Explain the rationale, articulate trade-offs, and present alternatives.
+2. **Wait for explicit approval** — Only proceed after the user approves the architecture change.
+3. **Create the ADR** — Once approved, document it in `/arch-decision-records/ADR-<ID>-<kebab-case-title>.md` with context, decision, consequences, alternatives, implementation details, and references.
+4. **Implement** — Only after the ADR is documented and approved, proceed with the implementation.
+
+### Core Rule
+
+**Do not implement unilateral architecture changes.** Always consult and get explicit approval before changing the architecture.
+
+See `/arch-decision-records/ADR-PROCESS.md` for detailed guidelines and the ADR filing process.
+
+---
+
 ## Project-Specific Constraints
 
 - **Do not modify `Item.java`** — this class is considered an immutable dependency (the "goblin" rule from the kata).
