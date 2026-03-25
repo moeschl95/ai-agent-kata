@@ -18,3 +18,4 @@ This file is auto-maintained. It is updated every time a task is created or its 
 | 012 | Shop Bulk Projection View | ready-for-development | Dedicated Projection page: enter days, view entire inventory projected forward without mutating live data. |
 | 013 | Spring Event Bus | done | Publish domain events (DayAdvancedEvent, ItemExpiredEvent, ItemQualityChangedEvent) via the Spring event bus when the shop advances a day. |
 | 014 | Clean Architecture & DDD Refactor | done | Reorganise the backend into explicit Clean Architecture layers (domain, application, infrastructure, api) so that dependencies always point inward and each layer is independently testable. |
+| 015 | Inventory Table Sorting | ready-for-development | Server-side sorting for the inventory table: `GET /api/items` gains `sortBy` and `sortDir` query params; the Angular frontend sends sort state from Clarity column header clicks to the backend. |
