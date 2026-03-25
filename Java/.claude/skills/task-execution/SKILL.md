@@ -8,7 +8,7 @@ description: >
   want code written for an existing ready-for-development task. Also use it when the user reviews
   completed work (accepts or rejects an implemented task), or asks for a summary of what was built.
   Do NOT use this skill for planning or creating new tasks — that is the requirements-engineering
-  skill.
+  skill. Do NOT use this skill for bug reports or bug fixes — that is the bug-workflow skill.
 ---
 
 # Task Execution Workflow
@@ -195,6 +195,9 @@ Transition rules:
 - This skill moves `ready-for-development` → `in-progress` (when the user asks to implement).
 - This skill moves `in-progress` → `implemented` (when all criteria pass).
 - This skill moves `implemented` → `in-progress` (if the user rejects — note the feedback).
+
+> **Bug reports and bug fixes use a separate workflow.** If the user describes something broken
+> or unexpected in the running app, use the `bug-workflow` skill instead.
 
 ---
 

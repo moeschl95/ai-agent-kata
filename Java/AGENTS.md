@@ -100,6 +100,28 @@ See the `requirements-engineering` skill for task creation and the approval work
 
 ---
 
+## Bug Workflow (MANDATORY)
+
+When a bug is reported, track it under the `/bugs/` folder using the same Changelog discipline as tasks.
+
+Status lifecycle: `reported` → `in-progress` → `implemented` → `fixed`
+
+1. **On report** — create a bug file in `/bugs/<ID>-<short-title>/`, status `reported`, Changelog row added.
+2. **Before fixing** — update status to `in-progress`, append a Changelog row.
+3. **When fix is complete** — update status to `implemented`, document root cause and fix, append a Changelog row. Report to the user and invite review.
+4. **Never skip the Changelog** — every status change must be recorded. The Changelog is append-only.
+5. **Never self-close** — only the user can move a bug to `fixed`.
+
+Status transitions owned by an agent:
+- `reported` → `in-progress` (**only when the user explicitly asks to fix**, e.g. "fix it", "go ahead")
+- `in-progress` → `implemented` (when fix is verified)
+- `implemented` → `in-progress` (if the user rejects — note the feedback in the Changelog)
+- `implemented` → `fixed` (when the user accepts)
+
+See the `bug-workflow` skill for the full workflow, file template, and status reference.
+
+---
+
 ## Project-Specific Constraints
 
 - **Do not modify `Item.java`** — this class is considered an immutable dependency (the "goblin" rule from the kata).

@@ -11,7 +11,8 @@ description: >
   for task status, or wants to list all requirements. Even if they don't say "requirement" or "task"
   explicitly — if they are describing work to be planned, use this skill.
   NOTE: once a task is ready-for-development and the user asks to implement it, use the
-  task-execution skill instead.
+  task-execution skill instead. NOTE: if the user is describing a bug or broken behaviour in the
+  running app, use the bug-workflow skill instead — bugs are tracked under /bugs/, not /requirements/.
 ---
 
 # Requirements Engineering & Task Creation
