@@ -258,4 +258,140 @@ class GildedRoseTest {
         assertEquals(14, app.items[0].sellIn);
     }
 
+    // --- Conjured Aged Brie ---
+
+    @Test
+    void should_increaseQualityByTwo_when_conjuredAgedBrieHasPositiveSellIn() {
+        // Arrange
+        Item[] items = new Item[] { new Item("Conjured Aged Brie", 10, 20) };
+        GildedRose app = new GildedRose(items);
+        // Act
+        app.updateQuality();
+        // Assert
+        assertEquals(22, app.items[0].quality);
+    }
+
+    @Test
+    void should_decreaseSellInByOne_when_conjuredAgedBrieUpdated() {
+        // Arrange
+        Item[] items = new Item[] { new Item("Conjured Aged Brie", 10, 20) };
+        GildedRose app = new GildedRose(items);
+        // Act
+        app.updateQuality();
+        // Assert
+        assertEquals(9, app.items[0].sellIn);
+    }
+
+    @Test
+    void should_increaseQualityByFour_when_conjuredAgedBrieSellInIsExpired() {
+        // Arrange
+        Item[] items = new Item[] { new Item("Conjured Aged Brie", 0, 20) };
+        GildedRose app = new GildedRose(items);
+        // Act
+        app.updateQuality();
+        // Assert
+        assertEquals(24, app.items[0].quality);
+    }
+
+    @Test
+    void should_notIncreaseAbove50_when_conjuredAgedBrieQualityIsAtMax() {
+        // Arrange
+        Item[] items = new Item[] { new Item("Conjured Aged Brie", 10, 50) };
+        GildedRose app = new GildedRose(items);
+        // Act
+        app.updateQuality();
+        // Assert
+        assertEquals(50, app.items[0].quality);
+    }
+
+    @Test
+    void should_notIncreaseAbove50_when_conjuredAgedBrieQualityIsNearMaxAndSellInExpired() {
+        // Arrange
+        Item[] items = new Item[] { new Item("Conjured Aged Brie", -1, 48) };
+        GildedRose app = new GildedRose(items);
+        // Act
+        app.updateQuality();
+        // Assert
+        assertEquals(50, app.items[0].quality);
+    }
+
+    // --- Conjured Backstage passes ---
+
+    @Test
+    void should_increaseQualityByTwo_when_conjuredBackstagePassHasMoreThanTenDays() {
+        // Arrange
+        Item[] items = new Item[] { new Item("Conjured Backstage passes to a TAFKAL80ETC concert", 15, 20) };
+        GildedRose app = new GildedRose(items);
+        // Act
+        app.updateQuality();
+        // Assert
+        assertEquals(22, app.items[0].quality);
+    }
+
+    @Test
+    void should_increaseQualityByFour_when_conjuredBackstagePassHasTenDaysOrLess() {
+        // Arrange
+        Item[] items = new Item[] { new Item("Conjured Backstage passes to a TAFKAL80ETC concert", 10, 20) };
+        GildedRose app = new GildedRose(items);
+        // Act
+        app.updateQuality();
+        // Assert
+        assertEquals(24, app.items[0].quality);
+    }
+
+    @Test
+    void should_increaseQualityBySix_when_conjuredBackstagePassHasFiveDaysOrLess() {
+        // Arrange
+        Item[] items = new Item[] { new Item("Conjured Backstage passes to a TAFKAL80ETC concert", 5, 20) };
+        GildedRose app = new GildedRose(items);
+        // Act
+        app.updateQuality();
+        // Assert
+        assertEquals(26, app.items[0].quality);
+    }
+
+    @Test
+    void should_dropQualityToZero_when_conjuredBackstagePassSellInIsExpired() {
+        // Arrange
+        Item[] items = new Item[] { new Item("Conjured Backstage passes to a TAFKAL80ETC concert", 0, 20) };
+        GildedRose app = new GildedRose(items);
+        // Act
+        app.updateQuality();
+        // Assert
+        assertEquals(0, app.items[0].quality);
+    }
+
+    @Test
+    void should_notIncreaseAbove50_when_conjuredBackstagePassQualityIsNearMax() {
+        // Arrange
+        Item[] items = new Item[] { new Item("Conjured Backstage passes to a TAFKAL80ETC concert", 10, 48) };
+        GildedRose app = new GildedRose(items);
+        // Act
+        app.updateQuality();
+        // Assert
+        assertEquals(50, app.items[0].quality);
+    }
+
+    @Test
+    void should_notIncreaseAbove50_when_conjuredBackstagePassQualityIsNearMaxWithFiveDaysRemaining() {
+        // Arrange
+        Item[] items = new Item[] { new Item("Conjured Backstage passes to a TAFKAL80ETC concert", 5, 47) };
+        GildedRose app = new GildedRose(items);
+        // Act
+        app.updateQuality();
+        // Assert
+        assertEquals(50, app.items[0].quality);
+    }
+
+    @Test
+    void should_decreaseSellInByOne_when_conjuredBackstagePassUpdated() {
+        // Arrange
+        Item[] items = new Item[] { new Item("Conjured Backstage passes to a TAFKAL80ETC concert", 15, 20) };
+        GildedRose app = new GildedRose(items);
+        // Act
+        app.updateQuality();
+        // Assert
+        assertEquals(14, app.items[0].sellIn);
+    }
+
 }

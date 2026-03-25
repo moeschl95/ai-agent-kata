@@ -1,6 +1,6 @@
 # 002 — Dual-Type Conjured Items
 
-**Status:** ready-for-development
+**Status:** implemented
 
 ---
 
@@ -97,3 +97,5 @@ boundary cases (quality at 49, quality at 1 after sell-by, etc.) without introdu
 |------|--------|------|
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-25 | in-progress | Implementation started |
+| 2026-03-25 | implemented | ConjuredDecorator pattern implemented; all 34 tests pass |

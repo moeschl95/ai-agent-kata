@@ -13,10 +13,29 @@ class ItemUpdaterFactory {
     private static final ItemUpdater CONJURED = new ConjuredItemUpdater();
 
     static ItemUpdater forItem(Item item) {
+        // Check for dual-type conjured items first
+        if (item.name.startsWith(CONJURED_PREFIX + " ")) {
+            String baseName = item.name.substring((CONJURED_PREFIX + " ").length());
+            ItemUpdater baseUpdater = forBaseName(baseName);
+            
+            // If it's a special type, wrap it with ConjuredDecorator
+            if (baseUpdater != CONJURED && baseUpdater != NORMAL) {
+                return new ConjuredDecorator(baseUpdater);
+            }
+        }
+
         if (item.name.equals(AGED_BRIE)) return BRIE;
         if (item.name.equals(SULFURAS)) return LEGENDARY;
         if (item.name.equals(BACKSTAGE_PASS)) return PASS;
         if (item.name.startsWith(CONJURED_PREFIX)) return CONJURED;
+        return NORMAL;
+    }
+
+    private static ItemUpdater forBaseName(String baseName) {
+        if (baseName.equals(AGED_BRIE)) return BRIE;
+        if (baseName.equals(BACKSTAGE_PASS)) return PASS;
+        if (baseName.equals(SULFURAS)) return LEGENDARY;
+        if (baseName.startsWith(CONJURED_PREFIX)) return CONJURED;
         return NORMAL;
     }
 }
