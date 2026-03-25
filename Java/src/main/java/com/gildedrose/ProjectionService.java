@@ -2,35 +2,43 @@ package com.gildedrose;
 
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Service that projects the future state of one or more shop items without modifying the originals.
+ */
 @Service
 public class ProjectionService {
 
-    public ItemDto project(Item item, int days) {
-        if (days < 0) {
-            throw new IllegalArgumentException("Days cannot be negative");
-        }
-
-        // Create a defensive copy to avoid mutating the original item
-        Item projectedItem = new Item(item.name, item.sellIn, item.quality);
-
-        // Apply updateQuality logic 'days' times
+    /**
+     * Projects the state of a single item after the given number of days.
+     * The original item is not modified.
+     *
+     * @param item the item to project
+     * @param days the number of days to project forward; must be non-negative
+     * @return an {@link ItemDto} representing the projected state
+     * @throws IllegalArgumentException if {@code days} is negative
+     */
+    public ItemDto project(final Item item, final int days) {
+        if (days < 0) throw new IllegalArgumentException("Days cannot be negative");
+        final Item projectedItem = new Item(item.name, item.sellIn, item.quality);
         for (int i = 0; i < days; i++) {
             ItemUpdaterFactory.forItem(projectedItem).update(projectedItem);
         }
-
         return new ItemDto(projectedItem.name, projectedItem.sellIn, projectedItem.quality);
     }
 
-    public List<ItemDto> projectAll(Item[] items, int days) {
-        if (days < 0) {
-            throw new IllegalArgumentException("Days cannot be negative");
-        }
-
-        return Arrays.stream(items)
-                .map(item -> project(item, days))
-                .toList();
+    /**
+     * Projects the state of all items in the given list after the given number of days.
+     * The original items are not modified.
+     *
+     * @param items the items to project
+     * @param days  the number of days to project forward; must be non-negative
+     * @return a list of {@link ItemDto} instances representing the projected states
+     * @throws IllegalArgumentException if {@code days} is negative
+     */
+    public List<ItemDto> projectAll(final List<Item> items, final int days) {
+        if (days < 0) throw new IllegalArgumentException("Days cannot be negative");
+        return items.stream().map(item -> project(item, days)).toList();
     }
 }

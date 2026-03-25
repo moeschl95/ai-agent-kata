@@ -5,8 +5,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+/**
+ * Spring configuration class that defines beans for the Gilded Rose shop.
+ * <p>
+ * Reads pricing configuration from application properties and creates the
+ * {@link PricingService} and {@link GildedRose} beans.
+ * </p>
+ */
 @Configuration
 public class GildedRoseConfiguration {
 
@@ -31,9 +39,14 @@ public class GildedRoseConfiguration {
     @Value("${gilded-rose.base-prices.normal-item:20}")
     private int normalItemPrice;
 
+    /**
+     * Creates and configures a {@link PricingService} bean using application properties.
+     *
+     * @return the configured {@link DefaultPricingService}
+     */
     @Bean
     public PricingService pricingService() {
-        Map<String, Integer> basePrices = new HashMap<>();
+        final Map<String, Integer> basePrices = new HashMap<>();
         basePrices.put("Aged Brie", agedBriePrice);
         basePrices.put("Backstage pass to a TAFKAL80ETC concert", backstagePassPrice);
         basePrices.put("Conjured Mana Cake", conjuredManaCakePrice);
@@ -43,15 +56,20 @@ public class GildedRoseConfiguration {
         return new DefaultPricingService(basePrices, expiredDiscountRate, legendaryPrice);
     }
 
+    /**
+     * Creates a {@link GildedRose} bean pre-populated with the default set of shop items.
+     *
+     * @return a {@link GildedRose} instance containing the initial inventory
+     */
     @Bean
     public GildedRose gildedRose() {
-        return new GildedRose(new Item[]{
+        return new GildedRose(List.of(
                 new Item("+5 Dexterity Vest", 10, 20),
                 new Item("Aged Brie", 2, 0),
                 new Item("Elixir of the Mongoose", 5, 7),
                 new Item("Sulfuras, Hand of Ragnaros", 0, 80),
                 new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
                 new Item("Conjured Mana Cake", 3, 6)
-        });
+        ));
     }
 }

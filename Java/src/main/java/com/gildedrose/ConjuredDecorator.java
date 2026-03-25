@@ -3,12 +3,12 @@ package com.gildedrose;
 class ConjuredDecorator implements ItemUpdater {
     private final ItemUpdater baseUpdater;
 
-    ConjuredDecorator(ItemUpdater baseUpdater) {
+    ConjuredDecorator(final ItemUpdater baseUpdater) {
         this.baseUpdater = baseUpdater;
     }
 
     @Override
-    public void update(Item item) {
+    public void update(final Item item) {
         int qualityBefore = item.quality;
         baseUpdater.update(item);
         int qualityDelta = item.quality - qualityBefore;

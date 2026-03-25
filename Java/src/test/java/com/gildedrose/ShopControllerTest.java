@@ -30,17 +30,17 @@ class ShopControllerTest {
 
     @BeforeEach
     void setUp() {
-        gildedRose = new GildedRose(new Item[]{});
+        gildedRose = new GildedRose(List.of());
         ShopController shopController = new ShopController(gildedRose, pricingService, projectionService);
         mockMvc = MockMvcBuilders.standaloneSetup(shopController).build();
     }
 
     @Test
     void should_returnAllItems_when_getItemsEndpointIsCalled() throws Exception {
-        Item[] items = new Item[]{
+        List<Item> items = List.of(
                 new Item("Aged Brie", 10, 20),
                 new Item("Normal item", 5, 15)
-        };
+        );
         gildedRose.items = items;
 
         mockMvc.perform(get("/api/items"))
@@ -56,7 +56,7 @@ class ShopControllerTest {
 
     @Test
     void should_returnEmptyArray_when_noItemsExist() throws Exception {
-        gildedRose.items = new Item[]{};
+        gildedRose.items = List.of();
 
         mockMvc.perform(get("/api/items"))
                 .andExpect(status().isOk())
@@ -65,9 +65,9 @@ class ShopControllerTest {
 
     @Test
     void should_updateQualityAndReturnUpdatedItems_when_advanceDayEndpointIsCalled() throws Exception {
-        Item[] items = new Item[]{
+        List<Item> items = List.of(
                 new Item("Normal item", 5, 10)
-        };
+        );
         gildedRose.items = items;
 
         mockMvc.perform(post("/api/items/advance-day"))
@@ -79,7 +79,7 @@ class ShopControllerTest {
     @Test
     void should_returnPriceAsJson_when_getPriceForKnownItem() throws Exception {
         Item item = new Item("Aged Brie", 10, 20);
-        gildedRose.items = new Item[]{item};
+        gildedRose.items = List.of(item);
 
         when(pricingService.priceFor(item)).thenReturn(50);
 
@@ -92,7 +92,7 @@ class ShopControllerTest {
 
     @Test
     void should_returnNotFound_when_getPriceForUnknownItem() throws Exception {
-        gildedRose.items = new Item[]{};
+        gildedRose.items = List.of();
 
         mockMvc.perform(get("/api/items/UnknownItem/price"))
                 .andExpect(status().isNotFound());
@@ -101,7 +101,7 @@ class ShopControllerTest {
     @Test
     void should_returnProjectedItem_when_projectionEndpointIsCalled() throws Exception {
         Item item = new Item("Normal item", 10, 20);
-        gildedRose.items = new Item[]{item};
+        gildedRose.items = List.of(item);
         ItemDto projectedItem = new ItemDto("Normal item", 9, 19);
 
         when(projectionService.project(item, 1)).thenReturn(projectedItem);
@@ -115,7 +115,7 @@ class ShopControllerTest {
 
     @Test
     void should_returnNotFound_when_projectionForUnknownItem() throws Exception {
-        gildedRose.items = new Item[]{};
+        gildedRose.items = List.of();
 
         mockMvc.perform(get("/api/items/UnknownItem/projection?days=1"))
                 .andExpect(status().isNotFound());
@@ -124,7 +124,7 @@ class ShopControllerTest {
     @Test
     void should_returnBadRequest_when_projectionWithNegativeDays() throws Exception {
         Item item = new Item("Normal item", 10, 20);
-        gildedRose.items = new Item[]{item};
+        gildedRose.items = List.of(item);
 
         mockMvc.perform(get("/api/items/Normal item/projection?days=-1"))
                 .andExpect(status().isBadRequest());
@@ -132,10 +132,10 @@ class ShopControllerTest {
 
     @Test
     void should_returnProjectedItems_when_bulkProjectionEndpointIsCalled() throws Exception {
-        Item[] items = new Item[]{
+        List<Item> items = List.of(
                 new Item("Normal item", 10, 20),
                 new Item("Aged Brie", 5, 10)
-        };
+        );
         gildedRose.items = items;
         List<ItemDto> projectedItems = List.of(
                 new ItemDto("Normal item", 9, 19),
@@ -157,9 +157,9 @@ class ShopControllerTest {
 
     @Test
     void should_returnBadRequest_when_bulkProjectionWithNegativeDays() throws Exception {
-        Item[] items = new Item[]{
+        List<Item> items = List.of(
                 new Item("Normal item", 10, 20)
-        };
+        );
         gildedRose.items = items;
 
         mockMvc.perform(get("/api/items/projection?days=-1"))

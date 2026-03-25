@@ -169,10 +169,10 @@ class ProjectionServiceTest {
     @Test
     void should_projectAllItems_when_projectAllIsCalled() {
         // Arrange
-        Item[] items = new Item[]{
+        List<Item> items = List.of(
                 new Item("Normal item", 10, 20),
                 new Item("Aged Brie", 5, 10)
-        };
+        );
         // Act
         List<ItemDto> results = projectionService.projectAll(items, 1);
         // Assert
@@ -188,10 +188,10 @@ class ProjectionServiceTest {
     @Test
     void should_returnOriginalStates_when_projectAllWithDaysZero() {
         // Arrange
-        Item[] items = new Item[]{
+        List<Item> items = List.of(
                 new Item("Normal item", 10, 20),
                 new Item("Aged Brie", 5, 10)
-        };
+        );
         // Act
         List<ItemDto> results = projectionService.projectAll(items, 0);
         // Assert
@@ -207,7 +207,7 @@ class ProjectionServiceTest {
     @Test
     void should_returnEmptyList_when_projectAllWithEmptyArray() {
         // Arrange
-        Item[] items = new Item[]{};
+        List<Item> items = List.of();
         // Act
         List<ItemDto> results = projectionService.projectAll(items, 5);
         // Assert

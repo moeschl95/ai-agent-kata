@@ -12,7 +12,7 @@ class ItemUpdaterFactory {
     private static final ItemUpdater PASS = new BackstagePassUpdater();
     private static final ItemUpdater CONJURED = new ConjuredItemUpdater();
 
-    static ItemUpdater forItem(Item item) {
+    static ItemUpdater forItem(final Item item) {
         // Check for dual-type conjured items first
         if (item.name.startsWith(CONJURED_PREFIX + " ")) {
             String baseName = item.name.substring((CONJURED_PREFIX + " ").length());
@@ -31,7 +31,7 @@ class ItemUpdaterFactory {
         return NORMAL;
     }
 
-    private static ItemUpdater forBaseName(String baseName) {
+    private static ItemUpdater forBaseName(final String baseName) {
         if (baseName.equals(AGED_BRIE)) return BRIE;
         if (baseName.equals(BACKSTAGE_PASS)) return PASS;
         if (baseName.equals(SULFURAS)) return LEGENDARY;
