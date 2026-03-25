@@ -187,7 +187,8 @@ export class ShopService {
 ## Typical Component Pattern (standalone)
 
 ```ts
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, DestroyRef, OnInit, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { ClarityModule } from '@clr/angular';
 import { ShopService } from '../../core/shop.service';
@@ -201,6 +202,7 @@ import { ShopItem } from '../../core/models';
 })
 export class InventoryComponent implements OnInit {
   private readonly shopService = inject(ShopService);
+  private readonly destroyRef = inject(DestroyRef);
   items: ShopItem[] = [];
   loading = false;
 
@@ -210,16 +212,20 @@ export class InventoryComponent implements OnInit {
 
   load(): void {
     this.loading = true;
-    this.shopService.getItems().subscribe({
-      next: items => { this.items = items; this.loading = false; },
-      error: () => { this.loading = false; }
-    });
+    this.shopService.getItems()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: items => { this.items = items; this.loading = false; },
+        error: () => { this.loading = false; }
+      });
   }
 }
 ```
 
 Use `inject()` instead of constructor injection — it is the modern idiomatic Angular 17+ approach.
 Always handle the `error` callback — show a `<clr-alert>` to the user when something goes wrong.
+Every `subscribe()` call in a component **must** be piped through `takeUntilDestroyed(this.destroyRef)`
+to prevent memory leaks — this is a mandatory project convention.
 
 ---
 

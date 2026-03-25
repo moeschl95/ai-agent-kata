@@ -11,3 +11,8 @@ This file is auto-maintained. It is updated every time a task is created or its 
 | 005 | Item State Projection | done | Simulate the state an item will have after n days without mutating the live inventory. |
 | 006 | In-Memory Item Persistence | ready-for-development | Persist items using Spring Data JPA with H2 in-memory; architecture makes swapping to MariaDB a config-only change. |
 | 007 | Remove Maven Build | ready-for-development | Remove all Maven files (pom.xml, mvnw, .mvn/, target/) so Gradle is the sole build tool. |
+| 008 | Angular Frontend Bootstrap | ready-for-development | Scaffold an Angular 17 + Clarity app in `frontend/`, set up the proxy, shared models, and `ShopService`. |
+| 009 | Inventory List Page | ready-for-development | Display all shop items in a Clarity datagrid; show loading and error states. |
+| 010 | Advance Day Action | ready-for-development | Add an "Advance Day" button on the inventory page that calls the backend and refreshes the table. |
+| 011 | Item Projection Panel | ready-for-development | Per-row "Project" button opens a modal form to forecast a single item's state after N days. |
+| 012 | Shop Bulk Projection View | ready-for-development | Dedicated Projection page: enter days, view entire inventory projected forward without mutating live data. |
