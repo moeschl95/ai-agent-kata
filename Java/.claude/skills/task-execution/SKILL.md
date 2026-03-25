@@ -196,7 +196,7 @@ Transition rules:
   implementation. Wait for a clear signal: "implement", "build it", "start work", etc.
 - **Never write production code without a failing test first.** TDD is mandatory per `AGENTS.md`.
 - **Follow project code conventions.** Before writing any Java code, consult
-  [`.claude/conventions/CODE_CONVENTIONS.md`](../../../.claude/conventions/CODE_CONVENTIONS.md):
+  [`.claude/conventions/JAVA_CODE_CONVENTIONS.md`](../../../.claude/conventions/JAVA_CODE_CONVENTIONS.md):
   `final` on all parameters, Javadoc on every public class/method, early exits over `if-else`, and
   `List`/`Set`/`Map` instead of plain arrays.
 - **Do not modify `Item.java`.** It is an immutable dependency (the kata's "goblin" rule).
