@@ -38,7 +38,7 @@ class ShopControllerTest {
                 new ItemDto("Aged Brie", 10, 20),
                 new ItemDto("Normal item", 5, 15)
         );
-        when(shopService.getAllItems()).thenReturn(items);
+        when(shopService.getAllItems(null, null)).thenReturn(items);
 
         mockMvc.perform(get("/api/items"))
                 .andExpect(status().isOk())
@@ -53,7 +53,7 @@ class ShopControllerTest {
 
     @Test
     void should_returnEmptyArray_when_noItemsExist() throws Exception {
-        when(shopService.getAllItems()).thenReturn(List.of());
+        when(shopService.getAllItems(null, null)).thenReturn(List.of());
 
         mockMvc.perform(get("/api/items"))
                 .andExpect(status().isOk())
@@ -139,5 +139,131 @@ class ShopControllerTest {
     void should_returnBadRequest_when_bulkProjectionWithNegativeDays() throws Exception {
         mockMvc.perform(get("/api/items/projection?days=-1"))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void should_returnItemsSortedByNameAsc_when_sortByNameAscParamsProvided() throws Exception {
+        List<ItemDto> items = List.of(
+                new ItemDto("Aged Brie", 10, 20),
+                new ItemDto("Normal item", 5, 15),
+                new ItemDto("Sulfuras", 0, 80)
+        );
+        when(shopService.getAllItems("name", "asc")).thenReturn(items);
+
+        mockMvc.perform(get("/api/items?sortBy=name&sortDir=asc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].name", equalTo("Aged Brie")))
+                .andExpect(jsonPath("$[1].name", equalTo("Normal item")))
+                .andExpect(jsonPath("$[2].name", equalTo("Sulfuras")));
+    }
+
+    @Test
+    void should_returnItemsSortedByNameDesc_when_sortByNameDescParamsProvided() throws Exception {
+        List<ItemDto> items = List.of(
+                new ItemDto("Sulfuras", 0, 80),
+                new ItemDto("Normal item", 5, 15),
+                new ItemDto("Aged Brie", 10, 20)
+        );
+        when(shopService.getAllItems("name", "desc")).thenReturn(items);
+
+        mockMvc.perform(get("/api/items?sortBy=name&sortDir=desc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].name", equalTo("Sulfuras")))
+                .andExpect(jsonPath("$[1].name", equalTo("Normal item")))
+                .andExpect(jsonPath("$[2].name", equalTo("Aged Brie")));
+    }
+
+    @Test
+    void should_returnItemsSortedBySellInAsc_when_sortBySellInAscParamsProvided() throws Exception {
+        List<ItemDto> items = List.of(
+                new ItemDto("Sulfuras", 0, 80),
+                new ItemDto("Normal item", 5, 15),
+                new ItemDto("Aged Brie", 10, 20)
+        );
+        when(shopService.getAllItems("sellIn", "asc")).thenReturn(items);
+
+        mockMvc.perform(get("/api/items?sortBy=sellIn&sortDir=asc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].sellIn", equalTo(0)))
+                .andExpect(jsonPath("$[1].sellIn", equalTo(5)))
+                .andExpect(jsonPath("$[2].sellIn", equalTo(10)));
+    }
+
+    @Test
+    void should_returnItemsSortedBySellInDesc_when_sortBySellInDescParamsProvided() throws Exception {
+        List<ItemDto> items = List.of(
+                new ItemDto("Aged Brie", 10, 20),
+                new ItemDto("Normal item", 5, 15),
+                new ItemDto("Sulfuras", 0, 80)
+        );
+        when(shopService.getAllItems("sellIn", "desc")).thenReturn(items);
+
+        mockMvc.perform(get("/api/items?sortBy=sellIn&sortDir=desc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].sellIn", equalTo(10)))
+                .andExpect(jsonPath("$[1].sellIn", equalTo(5)))
+                .andExpect(jsonPath("$[2].sellIn", equalTo(0)));
+    }
+
+    @Test
+    void should_returnItemsSortedByQualityAsc_when_sortByQualityAscParamsProvided() throws Exception {
+        List<ItemDto> items = List.of(
+                new ItemDto("Normal item", 5, 15),
+                new ItemDto("Aged Brie", 10, 20),
+                new ItemDto("Sulfuras", 0, 80)
+        );
+        when(shopService.getAllItems("quality", "asc")).thenReturn(items);
+
+        mockMvc.perform(get("/api/items?sortBy=quality&sortDir=asc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].quality", equalTo(15)))
+                .andExpect(jsonPath("$[1].quality", equalTo(20)))
+                .andExpect(jsonPath("$[2].quality", equalTo(80)));
+    }
+
+    @Test
+    void should_returnItemsSortedByQualityDesc_when_sortByQualityDescParamsProvided() throws Exception {
+        List<ItemDto> items = List.of(
+                new ItemDto("Sulfuras", 0, 80),
+                new ItemDto("Aged Brie", 10, 20),
+                new ItemDto("Normal item", 5, 15)
+        );
+        when(shopService.getAllItems("quality", "desc")).thenReturn(items);
+
+        mockMvc.perform(get("/api/items?sortBy=quality&sortDir=desc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].quality", equalTo(80)))
+                .andExpect(jsonPath("$[1].quality", equalTo(20)))
+                .andExpect(jsonPath("$[2].quality", equalTo(15)));
+    }
+
+    @Test
+    void should_returnItemsInDefaultOrder_when_noSortParamsProvided() throws Exception {
+        List<ItemDto> items = List.of(
+                new ItemDto("Aged Brie", 10, 20),
+                new ItemDto("Normal item", 5, 15)
+        );
+        when(shopService.getAllItems(null, null)).thenReturn(items);
+
+        mockMvc.perform(get("/api/items"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].name", equalTo("Aged Brie")))
+                .andExpect(jsonPath("$[1].name", equalTo("Normal item")));
+    }
+
+    @Test
+    void should_returnItemsInDefaultOrder_when_invalidSortByProvided() throws Exception {
+        List<ItemDto> items = List.of(
+                new ItemDto("Aged Brie", 10, 20),
+                new ItemDto("Normal item", 5, 15)
+        );
+        when(shopService.getAllItems("invalid", "asc")).thenReturn(items);
+
+        mockMvc.perform(get("/api/items?sortBy=invalid&sortDir=asc"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)));
     }
 }

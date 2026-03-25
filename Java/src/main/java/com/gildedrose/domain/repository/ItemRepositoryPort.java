@@ -17,6 +17,15 @@ public interface ItemRepositoryPort {
     List<Item> findAll();
 
     /**
+     * Loads all items from persistence, optionally sorted by the specified field and direction.
+     *
+     * @param sortBy the field to sort by (name, sellIn, quality) or null for default order
+     * @param sortDir the sort direction (asc, desc) or null for ascending if sortBy is provided
+     * @return a list of items, sorted if sortBy is provided
+     */
+    List<Item> findAll(String sortBy, String sortDir);
+
+    /**
      * Persists all given items.
      *
      * @param items the items to persist

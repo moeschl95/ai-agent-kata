@@ -92,4 +92,40 @@ describe('ShopService', () => {
     expect(req.request.method).toBe('GET');
     req.flush(mockProjected);
   });
+
+  it('should_sendSortByNameAscParam_when_getItemsCalledWithSortParams', () => {
+    const mockItems: ShopItem[] = [];
+    
+    service.getItems({ sortBy: 'name', sortDir: 'asc' }).subscribe(items => {
+      expect(items).toEqual(mockItems);
+    });
+
+    const req = httpMock.expectOne('/api/items?sortBy=name&sortDir=asc');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockItems);
+  });
+
+  it('should_sendSortByQualityDesc_when_getItemsCalledWithSortParams', () => {
+    const mockItems: ShopItem[] = [];
+
+    service.getItems({ sortBy: 'quality', sortDir: 'desc' }).subscribe(items => {
+      expect(items).toEqual(mockItems);
+    });
+
+    const req = httpMock.expectOne('/api/items?sortBy=quality&sortDir=desc');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockItems);
+  });
+
+  it('should_handleGetItemsWithoutSortParams_when_callWithoutOptions', () => {
+    const mockItems: ShopItem[] = [];
+
+    service.getItems().subscribe(items => {
+      expect(items).toEqual(mockItems);
+    });
+
+    const req = httpMock.expectOne('/api/items');
+    expect(req.request.method).toBe('GET');
+    req.flush(mockItems);
+  });
 });

@@ -1,6 +1,6 @@
 # 015 — Inventory Table Sorting
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -69,3 +69,6 @@ Users of the Gilded Rose shop UI need to be able to sort the inventory table by 
 | 2026-03-25 | funnel | Revised to include server-side sorting — backend API changes added to plan |
 | 2026-03-25 | funnel | Revised to use database-level sorting via JPA Sort instead of in-memory Comparator |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-25 | in-progress | Implementation started |
+| 2026-03-25 | implemented | Backend and frontend sorting implemented and tested |
+| 2026-03-25 | done | User approved; work complete |

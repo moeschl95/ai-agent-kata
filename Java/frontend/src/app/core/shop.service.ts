@@ -1,15 +1,30 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ShopItem, ProjectedItem } from './models';
+
+export interface SortOptions {
+  sortBy?: string;
+  sortDir?: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class ShopService {
   private readonly http = inject(HttpClient);
   private readonly base = '/api/items';
 
-  getItems(): Observable<ShopItem[]> {
-    return this.http.get<ShopItem[]>(this.base);
+  getItems(options?: SortOptions): Observable<ShopItem[]> {
+    let params = new HttpParams();
+    if (options?.sortBy) {
+      params = params.set('sortBy', options.sortBy);
+    }
+    if (options?.sortDir) {
+      params = params.set('sortDir', options.sortDir);
+    }
+    return this.http.get<ShopItem[]>(
+      this.base,
+      params.keys().length > 0 ? { params } : {}
+    );
   }
 
   advanceDay(): Observable<ShopItem[]> {

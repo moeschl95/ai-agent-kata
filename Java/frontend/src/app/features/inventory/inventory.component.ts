@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ClarityModule } from '@clr/angular';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ShopService } from '../../core/shop.service';
+import { ShopService, SortOptions } from '../../core/shop.service';
 import { ShopItem } from '../../core/models';
 
 @Component({
@@ -20,6 +20,10 @@ export class InventoryComponent implements OnInit, OnDestroy {
   loading = false;
   advancing = false;
   error: string | null = null;
+  sortBy: string | null = null;
+  sortDir: string | null = null;
+  private lastRequestedSortBy: string | null = null;
+  private lastRequestedSortDir: string | null = null;
 
   ngOnInit(): void {
     this.load();
@@ -39,9 +43,33 @@ export class InventoryComponent implements OnInit, OnDestroy {
     );
   }
 
+  onDatagridRefresh(state: any): void {
+    // Extract sort state from the refresh event
+    let newSortBy: string | null = null;
+    let newSortDir: string | null = null;
+
+    if (state && state.sort && state.sort.by) {
+      newSortBy = state.sort.by;
+      newSortDir = state.sort.reverse ? 'desc' : 'asc';
+    }
+
+    // Only reload if the sort state differs from what we last requested
+    // This prevents duplicate requests when the datagrid refresh fires after data updates
+    if (newSortBy !== this.lastRequestedSortBy || newSortDir !== this.lastRequestedSortDir) {
+      this.sortBy = newSortBy;
+      this.sortDir = newSortDir;
+      this.load();
+    }
+  }
+
   private load(): void {
+    const options: SortOptions = {};
+    if (this.sortBy) {
+      options.sortBy = this.sortBy;
+      options.sortDir = this.sortDir || undefined;
+    }
     this.executeAction(
-      () => this.shopService.getItems(),
+      () => this.shopService.getItems(options),
       () => this.loading = true,
       () => this.loading = false,
       'Failed to load inventory'

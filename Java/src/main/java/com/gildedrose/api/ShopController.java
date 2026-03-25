@@ -30,13 +30,17 @@ public class ShopController {
     }
 
     /**
-     * Returns all items currently held in the shop.
+     * Returns all items currently held in the shop, optionally sorted.
      *
+     * @param sortBy the field to sort by (name, sellIn, quality) or null for default order
+     * @param sortDir the sort direction (asc, desc) or null for default
      * @return a list of item DTOs representing the current inventory
      */
     @GetMapping
-    public List<ItemDto> getItems() {
-        return shopService.getAllItems();
+    public List<ItemDto> getItems(
+            @RequestParam(required = false) final String sortBy,
+            @RequestParam(required = false) final String sortDir) {
+        return shopService.getAllItems(sortBy, sortDir);
     }
 
     /**

@@ -45,6 +45,12 @@ class GildedRoseIntegrationTest {
             }
 
             @Override
+            public List<Item> findAll(String sortBy, String sortDir) {
+                // For this test implementation, delegate to findAll() without sorting
+                return findAll();
+            }
+
+            @Override
             public void saveAll(List<Item> items) {
                 List<ItemEntity> entities = items.stream()
                         .map(item -> {

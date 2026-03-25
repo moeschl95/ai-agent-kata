@@ -51,6 +51,17 @@ public class ShopService {
     }
 
     /**
+     * Returns all items currently in the shop inventory, optionally sorted.
+     *
+     * @param sortBy the field to sort by (name, sellIn, quality) or null for default order
+     * @param sortDir the sort direction (asc, desc) or null for ascending if sortBy is provided
+     * @return a list of item DTOs, sorted if sortBy is provided
+     */
+    public List<ItemDto> getAllItems(final String sortBy, final String sortDir) {
+        return mapToDto(itemRepository.findAll(sortBy, sortDir));
+    }
+
+    /**
      * Advances the shop by one day, updating all item qualities and persisting the changes.
      * Publishes domain events for item changes.
      *

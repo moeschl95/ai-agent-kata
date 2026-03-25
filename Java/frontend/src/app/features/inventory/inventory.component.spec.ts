@@ -142,4 +142,65 @@ describe('InventoryComponent', () => {
     const alert: DebugElement = fixture.debugElement.query(By.css('clr-alert[clrAlertType="danger"]'));
     expect(alert).toBeTruthy();
   });
+
+  it('should_callServiceWithSortParams_when_onDatagridRefreshCalledWithSort', () => {
+    // Arrange
+    const mockItems: ShopItem[] = [];
+    shopService.getItems.and.returnValue(of(mockItems));
+    const state = { sort: { by: 'name', reverse: false } };
+
+    // Act
+    component.onDatagridRefresh(state);
+
+    // Assert
+    expect(shopService.getItems).toHaveBeenCalledWith({ sortBy: 'name', sortDir: 'asc' });
+  });
+
+  it('should_callServiceWithDescSortDir_when_datagridSortReverse', () => {
+    // Arrange
+    const mockItems: ShopItem[] = [];
+    shopService.getItems.and.returnValue(of(mockItems));
+    const state = { sort: { by: 'quality', reverse: true } };
+
+    // Act
+    component.onDatagridRefresh(state);
+
+    // Assert
+    expect(shopService.getItems).toHaveBeenCalledWith({ sortBy: 'quality', sortDir: 'desc' });
+  });
+
+  it('should_callServiceWithoutSortParams_when_datagridSortChangesToNone', () => {
+    // Arrange
+    const mockItems: ShopItem[] = [];
+    shopService.getItems.and.returnValue(of(mockItems));
+    
+    // First, set a sort state
+    const sortedState = { sort: { by: 'name', reverse: false } };
+    component.onDatagridRefresh(sortedState);
+    shopService.getItems.calls.reset();
+    
+    // Then clear the sort
+    const unsortedState = { sort: null };
+
+    // Act
+    component.onDatagridRefresh(unsortedState);
+
+    // Assert - should reload when sort is cleared
+    expect(shopService.getItems).toHaveBeenCalledWith({});
+  });
+
+  it('should_notReloadData_when_sortStateHasNotChanged', () => {
+    // Arrange
+    const mockItems: ShopItem[] = [];
+    shopService.getItems.and.returnValue(of(mockItems));
+    const state = { sort: { by: 'name', reverse: false } };
+
+    // Act - call with same sort twice
+    component.onDatagridRefresh(state);
+    shopService.getItems.calls.reset();
+    component.onDatagridRefresh(state);
+
+    // Assert - should not reload on second call
+    expect(shopService.getItems).not.toHaveBeenCalled();
+  });
 });

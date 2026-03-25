@@ -20,10 +20,10 @@
     </div>
 
     <!-- Datagrid -->
-    <clr-datagrid *ngIf="!loading && !error && items.length > 0">
-      <clr-dg-column>Name</clr-dg-column>
-      <clr-dg-column>Sell In</clr-dg-column>
-      <clr-dg-column>Quality</clr-dg-column>
+    <clr-datagrid *ngIf="!loading && !error && items.length > 0" (clrDgRefresh)="onDatagridRefresh($event)">
+      <clr-dg-column [clrDgSortBy]="'name'">Name</clr-dg-column>
+      <clr-dg-column [clrDgSortBy]="'sellIn'">Sell In</clr-dg-column>
+      <clr-dg-column [clrDgSortBy]="'quality'">Quality</clr-dg-column>
 
       <clr-dg-row *ngFor="let item of items" [ngClass]="{ 'text-danger': item.sellIn <= 0 }">
         <clr-dg-cell>{{ item.name }}</clr-dg-cell>
