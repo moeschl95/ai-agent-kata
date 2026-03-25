@@ -79,6 +79,24 @@ Never write production code without a corresponding failing test written first. 
 
 ---
 
+## Task Workflow (MANDATORY)
+
+When working on a task from the `/requirements/` folder:
+
+1. **Before starting** — update the `**Status:**` line in the task file to `in-progress` and append a Changelog row with today's date and a short note.
+2. **When finished** — update `**Status:**` to `implemented` and append a Changelog row.
+3. **Never skip the Changelog** — every status change must be recorded as a new row (date, new status, short note). The Changelog is append-only; never edit or delete an existing row.
+4. **Never self-approve** — only the user can move a task to `ready-for-development` or `done`.
+
+Status transitions owned by an agent:
+- `ready-for-development` → `in-progress` (when work begins)
+- `in-progress` → `implemented` (when implementation is complete)
+- `implemented` → `in-progress` (if the user rejects the review — note the feedback in the Changelog)
+
+See the `requirements-engineering` skill for the full status reference, file template, and approval workflow.
+
+---
+
 ## Project-Specific Constraints
 
 - **Do not modify `Item.java`** — this class is considered an immutable dependency (the "goblin" rule from the kata).
