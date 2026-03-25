@@ -99,6 +99,8 @@ requirements/
     └── <ID>-<short-title>.md
 ```
 
+After creating the file, **immediately update `/requirements/OVERVIEW.md`** — add a new row to the table with the new task's `ID`, `Title`, `Status` (`funnel`), and a one-sentence `Summary`.
+
 Use the template below. Fill in every section — do not leave placeholders.
 
 ---
@@ -208,7 +210,9 @@ Append a new row to the Changelog table:
 | YYYY-MM-DD | ready-for-development | Approved by user |
 ```
 
-Confirm to the user: "Task `<ID>-<short-title>` is now **ready-for-development**."
+Update `/requirements/OVERVIEW.md` — change the `Status` cell for this task from `funnel` to `ready-for-development`.
+
+Confirm to the user: "Task `<ID>-<short-title>` is now **ready-for-development**. Let me know when you want me to implement it."
 
 ### If the user requests changes
 

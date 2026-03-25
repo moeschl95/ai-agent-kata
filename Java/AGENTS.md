@@ -90,7 +90,7 @@ When working on a task from the `/requirements/` folder:
 5. **When the user accepts and moves a task to `done`** — create a `SUMMARY.md` in the task folder summarising what was implemented and any problems addressed during development. See the `requirements-engineering` skill for the exact template.
 
 Status transitions owned by an agent:
-- `ready-for-development` → `in-progress` (when work begins)
+- `ready-for-development` → `in-progress` (**only when the user explicitly asks to implement**, e.g. "implement", "start work", "build it" — approval alone is NOT a signal to begin)
 - `in-progress` → `implemented` (when implementation is complete)
 - `implemented` → `in-progress` (if the user rejects the review — note the feedback in the Changelog)
 - `implemented` → `done` (when the user accepts — agent creates `SUMMARY.md` at this point)
