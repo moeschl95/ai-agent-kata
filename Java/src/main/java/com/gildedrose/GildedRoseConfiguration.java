@@ -1,6 +1,7 @@
 package com.gildedrose;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -62,10 +63,11 @@ public class GildedRoseConfiguration {
      * This initialization happens before the bean is created, ensuring items are available immediately.
      *
      * @param repository the item repository for persistence
+     * @param publisher  the Spring event publisher used to dispatch domain events
      * @return a {@link GildedRose} instance that persists items on updateQuality()
      */
     @Bean
-    public GildedRose gildedRose(final ItemRepository repository) {
+    public GildedRose gildedRose(final ItemRepository repository, final ApplicationEventPublisher publisher) {
         // Seed default items if repository is empty
         if (repository.count() == 0) {
             final List<ItemEntity> defaultItems = List.of(
@@ -78,6 +80,6 @@ public class GildedRoseConfiguration {
             );
             repository.saveAll(defaultItems);
         }
-        return new GildedRose(repository);
+        return new GildedRose(repository, publisher);
     }
 }

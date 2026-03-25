@@ -16,3 +16,4 @@ This file is auto-maintained. It is updated every time a task is created or its 
 | 010 | Advance Day Action | ready-for-development | Add an "Advance Day" button on the inventory page that calls the backend and refreshes the table. |
 | 011 | Item Projection Panel | ready-for-development | Per-row "Project" button opens a modal form to forecast a single item's state after N days. |
 | 012 | Shop Bulk Projection View | ready-for-development | Dedicated Projection page: enter days, view entire inventory projected forward without mutating live data. |
+| 013 | Spring Event Bus | done | Publish domain events (DayAdvancedEvent, ItemExpiredEvent, ItemQualityChangedEvent) via the Spring event bus when the shop advances a day. |
