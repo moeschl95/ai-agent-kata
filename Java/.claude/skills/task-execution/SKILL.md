@@ -55,7 +55,9 @@ Before writing any code:
    ```
    | YYYY-MM-DD | in-progress | Implementation started |
    ```
-4. Update `/requirements/OVERVIEW.md` — change the `Status` cell to `in-progress`.
+4. **MANDATORY — update `/requirements/OVERVIEW.md`** — change the `Status` cell for this task
+   to `in-progress`. **Do this in the same edit pass as step 2. Both files must be updated before
+   writing any code. Never leave OVERVIEW.md out of sync with the task file.**
 
 > **Only start work when the user explicitly asks to implement** (e.g. "implement it", "start work",
 > "build it"). Approval alone is NOT a trigger — wait for an explicit implementation request.
@@ -96,7 +98,9 @@ When all acceptance criteria are satisfied and the full test suite passes:
    ```
    | YYYY-MM-DD | implemented | <short summary: what was built, test count> |
    ```
-3. Update `/requirements/OVERVIEW.md` — change the `Status` cell to `implemented`.
+3. **MANDATORY — update `/requirements/OVERVIEW.md`** — change the `Status` cell for this task
+   to `implemented`. **Do this in the same edit pass as step 1. Both files must be updated
+   together. Never leave OVERVIEW.md out of sync with the task file.**
 4. Report to the user: summarise what was built, which files were changed, and how many tests pass.
    Invite them to review.
 
@@ -113,7 +117,9 @@ Transition to `done`:
    ```
    | YYYY-MM-DD | done | Accepted by user |
    ```
-3. Update `/requirements/OVERVIEW.md` — change the `Status` cell to `done`.
+3. **MANDATORY — update `/requirements/OVERVIEW.md`** — change the `Status` cell for this task
+   to `done`. **Do this in the same edit pass as step 1. Never leave OVERVIEW.md out of sync
+   with the task file.**
 4. Create `requirements/<ID>-<short-title>/SUMMARY.md` using the template below.
 
 ### If the user rejects (requests changes or reports failures)
@@ -125,7 +131,9 @@ Move back to `in-progress`:
    ```
    | YYYY-MM-DD | in-progress | Returned: <short summary of feedback> |
    ```
-3. Update `/requirements/OVERVIEW.md` — change the `Status` cell to `in-progress`.
+3. **MANDATORY — update `/requirements/OVERVIEW.md`** — change the `Status` cell for this task
+   to `in-progress`. **Do this in the same edit pass as step 1. Never leave OVERVIEW.md out of
+   sync with the task file.**
 4. Address the feedback, then return to Step 2.
 
 ---
