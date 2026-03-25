@@ -31,13 +31,17 @@ New requirement described by user
   2. Create task file  (status: funnel)
         │
         ▼
-  3. Present to user for approval
+  3. Check existing open tasks for conflicts
+     └─ update affected tasks + their Changelog
+        │
+        ▼
+  4. Present to user for approval
         │
       ┌─┴──────────────┐
    Approved          Changes requested
       │                    │
       ▼                    ▼
-  4. Mark             Revise & re-present
+  5. Mark             Revise & re-present
   ready-for-development
         │
         ▼
@@ -151,10 +155,34 @@ Each item should be directly verifiable — either by a test or by visual inspec
 
 ---
 
-## Step 4 — Present for approval
+## Step 4 — Check existing open tasks for conflicts
 
-After creating the file, display the full content of the task file to the user inline (do not just
-say "file created"). Then ask:
+Before presenting the new task to the user, scan all existing task files whose status is **not**
+`done` (i.e. `funnel`, `ready-for-development`, `in-progress`, or `implemented`) for potential
+conflicts with the new task.
+
+**What counts as a conflict:**
+- Both tasks touch the same classes, interfaces, or files.
+- The new task introduces an API or abstraction that an existing task also plans to introduce (duplication risk).
+- The new task makes assumptions (e.g. about data structures or method signatures) that contradict an existing task's plan.
+- The new task's scope overlaps with an existing task in a way that could cause merge conflicts or contradictory implementations.
+
+**If conflicts are found:**
+1. Update the affected existing task file — add a note under its **Notes** section describing the conflict and how the two tasks relate.
+2. Append a Changelog row to the affected task:
+   ```
+   | YYYY-MM-DD | <current status> | Conflict noted with <new-task-ID>: <short reason> |
+   ```
+3. Add a **Conflicts** subsection to the new task's **Notes** section listing every affected task and the nature of the conflict.
+
+**If no conflicts are found:** proceed directly to Step 5 without modifying any existing task files.
+
+---
+
+## Step 5 — Present for approval
+
+After creating the file (and resolving any conflicts), display the full content of the new task file
+to the user inline (do not just say "file created"). Then ask:
 
 > "Does this look right? Reply **approve** to mark it ready-for-development, or tell me what to change."
 
@@ -164,7 +192,7 @@ Wait for the user's response before proceeding.
 
 ---
 
-## Step 5 — Handle the response
+## Step 6 — Handle the response
 
 ### If the user approves (says "approve", "looks good", "yes", "lgtm", etc.)
 
@@ -191,7 +219,7 @@ or title/ID slug if truly needed). Append a new row to the Changelog table descr
 | YYYY-MM-DD | funnel | Revised: <short summary of changes> |
 ```
 
-Then re-present the updated content and go back to Step 4.
+Then re-present the updated content and go back to Step 5.
 
 ---
 
@@ -239,3 +267,4 @@ Read the status from each task file's `**Status:**` line.
 - **Always show the task content** to the user before asking for approval — never silently create a file and just report a path.
 - **Status lives in the file.** The single source of truth is the `**Status:**` line inside the task `.md` file.
 - **Changelog is append-only.** Every status change, revision, or significant decision must be recorded as a new row in the Changelog table (with today's date, the new status, and a short note). Never edit or delete an existing changelog row.
+- **Always run the conflict check.** When creating a new task, always scan all non-`done` task files before presenting the task for approval. Skipping the conflict check is not permitted, even if it seems unlikely there are conflicts.
