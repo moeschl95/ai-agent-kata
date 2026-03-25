@@ -1,6 +1,6 @@
 # 014 — Clean Architecture & DDD Refactor
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -95,3 +95,5 @@ Tasks **010**, **011**, and **012** (all `ready-for-development`) depend on the 
 |------|--------|------|
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-25 | in-progress | Implementation started |
+| 2026-03-25 | implemented | Test files reorganized into matching package structure; integration test adapter fixed to preserve entity IDs; all 86 tests passing || 2026-03-25 | done | Accepted; GildedRose.java moved to domain.service layer; all acceptance criteria met |

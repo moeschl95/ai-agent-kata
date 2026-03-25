@@ -1,5 +1,8 @@
 package com.gildedrose;
 
+import com.gildedrose.domain.service.DefaultPricingService;
+import com.gildedrose.domain.service.GildedRose;
+import com.gildedrose.domain.service.PricingService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
