@@ -1,21 +1,25 @@
 ---
 name: requirements-engineering
 description: >
-  Manage requirements and tasks for this project. Creates structured task files under /requirements/,
-  assigns incrementing 3-digit task IDs, writes a description and implementation plan, and guides the
-  task through an approval workflow. Use this skill whenever a user mentions a requirement, a feature
-  request, a bug to fix, a task to plan, or says things like "I want to...", "we need to...",
-  "add support for...", "plan this...", "create a task for...", "track this work", or "let's implement...".
-  Also trigger this skill when the user reviews or approves/rejects a task, asks for task status,
-  or wants to list all requirements. Even if they don't say "requirement" or "task" explicitly —
-  if they are describing work to be done, use this skill.
+  Capture, structure, and approve new requirements and tasks for this project. Creates structured
+  task files under /requirements/, assigns incrementing 3-digit task IDs, writes a description and
+  implementation plan, checks for conflicts with open tasks, and guides the task through the
+  approval gate (funnel → ready-for-development). Use this skill whenever a user mentions a
+  requirement, a feature request, a bug to fix, a task to plan, or says things like "I want to...",
+  "we need to...", "add support for...", "plan this...", "create a task for...", or "track this work".
+  Also trigger this skill when the user reviews or approves/rejects a task in funnel status, asks
+  for task status, or wants to list all requirements. Even if they don't say "requirement" or "task"
+  explicitly — if they are describing work to be planned, use this skill.
+  NOTE: once a task is ready-for-development and the user asks to implement it, use the
+  task-execution skill instead.
 ---
 
-# Requirements Engineering & Task Management
+# Requirements Engineering & Task Creation
 
-This skill turns raw requirements into tracked, structured task files under `/requirements/`, walks
-them through an approval gate, and keeps every task in a well-known status so the team always knows
-what is ready to build.
+This skill turns raw requirements into tracked, structured task files under `/requirements/` and
+walks them through the approval gate. The scope ends once a task reaches `ready-for-development`.
+Implementation, status updates beyond that point, and SUMMARY.md creation are handled by the
+`task-execution` skill.
 
 ---
 
@@ -43,21 +47,6 @@ New requirement described by user
       ▼                    ▼
   5. Mark             Revise & re-present
   ready-for-development
-        │
-        ▼
-     Agent picks up work
-        │
-        ▼
-    in-progress
-        │
-        ▼
-    implemented  ←  agent signals done
-        │
-      ┌─┴──────────────┐
-  Review OK        Changes requested
-      │                    │
-      ▼                    ▼
-    done            back to in-progress
 ```
 
 ---
@@ -99,7 +88,8 @@ requirements/
     └── <ID>-<short-title>.md
 ```
 
-After creating the file, **immediately update `/requirements/OVERVIEW.md`** — add a new row to the table with the new task's `ID`, `Title`, `Status` (`funnel`), and a one-sentence `Summary`.
+After creating the file, **immediately update `/requirements/OVERVIEW.md`** — add a new row to the
+table with the new task's `ID`, `Title`, `Status` (`funnel`), and a one-sentence `Summary`.
 
 Use the template below. Fill in every section — do not leave placeholders.
 
@@ -210,9 +200,11 @@ Append a new row to the Changelog table:
 | YYYY-MM-DD | ready-for-development | Approved by user |
 ```
 
-Update `/requirements/OVERVIEW.md` — change the `Status` cell for this task from `funnel` to `ready-for-development`.
+Update `/requirements/OVERVIEW.md` — change the `Status` cell for this task from `funnel` to
+`ready-for-development`.
 
-Confirm to the user: "Task `<ID>-<short-title>` is now **ready-for-development**. Let me know when you want me to implement it."
+Confirm to the user: "Task `<ID>-<short-title>` is now **ready-for-development**. Let me know when
+you want me to implement it."
 
 ### If the user requests changes
 
@@ -227,77 +219,15 @@ Then re-present the updated content and go back to Step 5.
 
 ---
 
-## Status reference
+## Status reference (this skill's scope)
 
 | Status | Set by | Meaning |
 |---|---|---|
 | `funnel` | Agent (on creation) | Freshly created, awaiting user approval |
 | `ready-for-development` | User (approval) | Approved — safe for an agent to start building |
-| `in-progress` | Agent (when work begins) | An agent has picked it up and is actively working |
-| `implemented` | Agent (when work is done) | Implementation complete, waiting for user review |
-| `done` | User (positive review) | Reviewed and accepted — task is closed |
 
-Transition rules:
-- Only the **user** can move a task from `funnel` → `ready-for-development` (via explicit approval).
-- Only the **user** can move a task from `implemented` → `done` (via explicit sign-off).
-- An **agent** moves tasks from `ready-for-development` → `in-progress` when it starts work, and from `in-progress` → `implemented` when it finishes.
-- If the user rejects an `implemented` task, the agent moves it back to `in-progress` and notes the feedback in the Changelog.
-
-### When a task is moved to `done`
-
-When the user accepts the implementation and the task transitions to `done`, the agent must:
-
-1. Update `**Status:**` to `done` in the task file.
-2. Append a Changelog row:
-   ```
-   | YYYY-MM-DD | done | Accepted by user |
-   ```
-3. Create a `SUMMARY.md` file in the task folder:
-   ```
-   requirements/<ID>-<short-title>/SUMMARY.md
-   ```
-   Use the template below.
-
-#### SUMMARY.md template
-
-```markdown
-# <ID> — <Human-readable title> — Implementation Summary
-
-**Date:** YYYY-MM-DD
-
-**Model:** <model name>
-
----
-
-## What Was Implemented
-
-<2–4 sentences describing what was built. Focus on the outcome: what the code now does that it
-didn't do before. Reference specific classes, methods, or patterns introduced.>
-
----
-
-## Problems Addressed During Development
-
-<Bullet list of noteworthy problems, surprises, or non-obvious decisions encountered while
-implementing. Include things like: edge cases discovered, design pivots, test failures that
-revealed bugs, refactoring decisions, or constraints that shaped the solution.>
-
-- …
-- …
-
----
-
-## Files Changed
-
-<List of files that were created or modified as part of this task.>
-
-- `path/to/File.java` — <one-line description of the change>
-- …
-```
-
-Fill every section with real content from the implementation — do not leave the template text.
-
-Always append a Changelog row whenever the status changes.
+For statuses beyond `ready-for-development` (`in-progress`, `implemented`, `done`), see the
+`task-execution` skill.
 
 ---
 
@@ -309,8 +239,9 @@ When the user asks to see all tasks, list current requirements or asks "what's t
 ```
 | ID  | Title                    | Status                  |
 |-----|--------------------------|-------------------------|
-| 001 | aged-brie-quality-cap    | ready-for-development   |
-| 002 | conjured-item-support    | draft                   |
+| 001 | aged-brie-quality-cap    | done                    |
+| 002 | conjured-item-support    | implemented             |
+| 003 | spring-boot-migration    | ready-for-development   |
 ```
 
 Read the status from each task file's `**Status:**` line.
@@ -326,4 +257,4 @@ Read the status from each task file's `**Status:**` line.
 - **Status lives in the file.** The single source of truth is the `**Status:**` line inside the task `.md` file.
 - **Changelog is append-only.** Every status change, revision, or significant decision must be recorded as a new row in the Changelog table (with today's date, the new status, and a short note). Never edit or delete an existing changelog row.
 - **Always run the conflict check.** When creating a new task, always scan all non-`done` task files before presenting the task for approval. Skipping the conflict check is not permitted, even if it seems unlikely there are conflicts.
-- **Always update `/requirements/OVERVIEW.md`** — whenever a new task is created or a task's status changes, update the table row for that task in `OVERVIEW.md`. The table columns are: `ID`, `Title`, `Status`, and `Summary` (a one-sentence description of the task). Add a new row when a task is created; update the `Status` cell in the existing row whenever the status changes.
+- **Always update `/requirements/OVERVIEW.md`** — whenever a new task is created or its funnel/approval status changes, update the table row. The table columns are: `ID`, `Title`, `Status`, and `Summary`.
