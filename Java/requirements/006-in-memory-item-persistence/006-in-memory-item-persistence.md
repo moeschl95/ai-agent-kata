@@ -1,6 +1,6 @@
 # 006 — In-Memory Item Persistence
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -120,3 +120,6 @@ entirely when switching databases.
 |------|--------|------|
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-25 | in-progress | Implementation started |
+| 2026-03-25 | implemented | Created ItemEntity, ItemRepository, ItemMapper, ItemDataInitializer, and adapted GildedRose for persistence. All 76 tests pass (3 new repository + 3 new integration tests). |
+| 2026-03-25 | done | Accepted by user |

@@ -57,19 +57,27 @@ public class GildedRoseConfiguration {
     }
 
     /**
-     * Creates a {@link GildedRose} bean pre-populated with the default set of shop items.
+     * Creates a {@link GildedRose} bean that loads items from the repository.
+     * Seeds the repository with default items if the table is empty.
+     * This initialization happens before the bean is created, ensuring items are available immediately.
      *
-     * @return a {@link GildedRose} instance containing the initial inventory
+     * @param repository the item repository for persistence
+     * @return a {@link GildedRose} instance that persists items on updateQuality()
      */
     @Bean
-    public GildedRose gildedRose() {
-        return new GildedRose(List.of(
-                new Item("+5 Dexterity Vest", 10, 20),
-                new Item("Aged Brie", 2, 0),
-                new Item("Elixir of the Mongoose", 5, 7),
-                new Item("Sulfuras, Hand of Ragnaros", 0, 80),
-                new Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
-                new Item("Conjured Mana Cake", 3, 6)
-        ));
+    public GildedRose gildedRose(final ItemRepository repository) {
+        // Seed default items if repository is empty
+        if (repository.count() == 0) {
+            final List<ItemEntity> defaultItems = List.of(
+                    new ItemEntity("+5 Dexterity Vest", 10, 20),
+                    new ItemEntity("Aged Brie", 2, 0),
+                    new ItemEntity("Elixir of the Mongoose", 5, 7),
+                    new ItemEntity("Sulfuras, Hand of Ragnaros", 0, 80),
+                    new ItemEntity("Backstage passes to a TAFKAL80ETC concert", 15, 20),
+                    new ItemEntity("Conjured Mana Cake", 3, 6)
+            );
+            repository.saveAll(defaultItems);
+        }
+        return new GildedRose(repository);
     }
 }
