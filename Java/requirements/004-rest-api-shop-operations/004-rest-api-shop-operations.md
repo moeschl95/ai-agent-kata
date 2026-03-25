@@ -1,6 +1,6 @@
 # 004 — REST API for Shop Operations
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -82,3 +82,6 @@ tests, however, will require the repository to be seeded. Task 006 should be imp
 | 2026-03-25 | ready-for-development | Approved by user |
 | 2026-03-25 | ready-for-development | Conflict noted with 005-item-state-projection: both touch ShopController |
 | 2026-03-25 | ready-for-development | Conflict noted with 006-in-memory-item-persistence: integration tests depend on persistence layer |
+| 2026-03-25 | in-progress | Implementation started |
+| 2026-03-25 | implemented | ShopController, ItemDto, and web tests implemented; 49 tests pass |
+| 2026-03-25 | done | Accepted by user |
