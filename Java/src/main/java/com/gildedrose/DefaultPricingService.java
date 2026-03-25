@@ -2,13 +2,13 @@ package com.gildedrose;
 
 import java.util.Map;
 
-class DefaultPricingService implements PricingService {
+public class DefaultPricingService implements PricingService {
 
     private final Map<String, Integer> basePrices;
     private final double expiredDiscountRate;
     private final int legendaryPrice;
 
-    DefaultPricingService(Map<String, Integer> basePrices, double expiredDiscountRate, int legendaryPrice) {
+    public DefaultPricingService(Map<String, Integer> basePrices, double expiredDiscountRate, int legendaryPrice) {
         this.basePrices = basePrices;
         this.expiredDiscountRate = expiredDiscountRate;
         this.legendaryPrice = legendaryPrice;
@@ -24,5 +24,13 @@ class DefaultPricingService implements PricingService {
             return (int) Math.round(basePrice * (1 - expiredDiscountRate));
         }
         return basePrice;
+    }
+
+    public int getLegendaryPrice() {
+        return legendaryPrice;
+    }
+
+    public double getExpiredDiscountRate() {
+        return expiredDiscountRate;
     }
 }

@@ -1,0 +1,50 @@
+package com.gildedrose;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@Configuration
+public class GildedRoseConfiguration {
+
+    @Value("${gilded-rose.legendary-price:999}")
+    private int legendaryPrice;
+
+    @Value("${gilded-rose.expired-discount-rate:0.5}")
+    private double expiredDiscountRate;
+
+    @Value("${gilded-rose.base-prices.aged-brie:50}")
+    private int agedBriePrice;
+
+    @Value("${gilded-rose.base-prices.backstage-pass:80}")
+    private int backstagePassPrice;
+
+    @Value("${gilded-rose.base-prices.conjured-mana-cake:25}")
+    private int conjuredManaCakePrice;
+
+    @Value("${gilded-rose.base-prices.sulfuras:999}")
+    private int sulfurasPrice;
+
+    @Value("${gilded-rose.base-prices.normal-item:20}")
+    private int normalItemPrice;
+
+    @Bean
+    public PricingService pricingService() {
+        Map<String, Integer> basePrices = new HashMap<>();
+        basePrices.put("Aged Brie", agedBriePrice);
+        basePrices.put("Backstage pass to a TAFKAL80ETC concert", backstagePassPrice);
+        basePrices.put("Conjured Mana Cake", conjuredManaCakePrice);
+        basePrices.put("Sulfuras, Hand of Ragnaros", sulfurasPrice);
+        basePrices.put("Normal item", normalItemPrice);
+
+        return new DefaultPricingService(basePrices, expiredDiscountRate, legendaryPrice);
+    }
+
+    @Bean
+    public GildedRose gildedRose() {
+        return new GildedRose(new Item[0]);
+    }
+}

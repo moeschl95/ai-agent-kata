@@ -1,0 +1,41 @@
+plugins {
+    java
+    jacoco
+    id("org.springframework.boot") version "3.2.0"
+    id("io.spring.dependency-management") version "1.1.4"
+}
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+group = "com.gildedrose"
+version = "0.0.1-SNAPSHOT"
+
+dependencies {
+    implementation("org.springframework.boot:spring-boot-starter")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+}
+
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    reports {
+        xml.required = true
+        html.required = true
+    }
+}
+
+tasks.register<JavaExec>("texttest") {
+    mainClass = "com.gildedrose.TexttestFixture"
+    classpath = sourceSets["test"].runtimeClasspath
+    args = listOf("30")
+}

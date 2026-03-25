@@ -1,6 +1,6 @@
 # 003 — Spring Boot Migration
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -107,3 +107,6 @@ without adding a REST API — that is a separate future feature.
 | 2026-03-25 | funnel | Revised: removed REST API scope; added future-feature note; simplified plan to spring-boot-starter (no web) |
 | 2026-03-25 | funnel | Revised: added Gradle Kotlin DSL migration alongside the Java 17 upgrade |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-25 | in-progress | Started implementation: writing Spring Boot integration tests and migrating build files |
+| 2026-03-25 | implemented | Completed Spring Boot migration: 44 tests pass (4 integration + 40 unit tests), Gradle Kotlin DSL and Maven builds produce runnable JARs, all acceptance criteria met |
+| 2026-03-25 | done | Accepted by user |
