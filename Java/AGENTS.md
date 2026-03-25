@@ -87,11 +87,13 @@ When working on a task from the `/requirements/` folder:
 2. **When finished** — update `**Status:**` to `implemented` and append a Changelog row.
 3. **Never skip the Changelog** — every status change must be recorded as a new row (date, new status, short note). The Changelog is append-only; never edit or delete an existing row.
 4. **Never self-approve** — only the user can move a task to `ready-for-development` or `done`.
+5. **When the user accepts and moves a task to `done`** — create a `SUMMARY.md` in the task folder summarising what was implemented and any problems addressed during development. See the `requirements-engineering` skill for the exact template.
 
 Status transitions owned by an agent:
 - `ready-for-development` → `in-progress` (when work begins)
 - `in-progress` → `implemented` (when implementation is complete)
 - `implemented` → `in-progress` (if the user rejects the review — note the feedback in the Changelog)
+- `implemented` → `done` (when the user accepts — agent creates `SUMMARY.md` at this point)
 
 See the `requirements-engineering` skill for the full status reference, file template, and approval workflow.
 

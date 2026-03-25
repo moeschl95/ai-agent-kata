@@ -239,6 +239,58 @@ Transition rules:
 - An **agent** moves tasks from `ready-for-development` → `in-progress` when it starts work, and from `in-progress` → `implemented` when it finishes.
 - If the user rejects an `implemented` task, the agent moves it back to `in-progress` and notes the feedback in the Changelog.
 
+### When a task is moved to `done`
+
+When the user accepts the implementation and the task transitions to `done`, the agent must:
+
+1. Update `**Status:**` to `done` in the task file.
+2. Append a Changelog row:
+   ```
+   | YYYY-MM-DD | done | Accepted by user |
+   ```
+3. Create a `SUMMARY.md` file in the task folder:
+   ```
+   requirements/<ID>-<short-title>/SUMMARY.md
+   ```
+   Use the template below.
+
+#### SUMMARY.md template
+
+```markdown
+# <ID> — <Human-readable title> — Implementation Summary
+
+**Date:** YYYY-MM-DD
+
+---
+
+## What Was Implemented
+
+<2–4 sentences describing what was built. Focus on the outcome: what the code now does that it
+didn't do before. Reference specific classes, methods, or patterns introduced.>
+
+---
+
+## Problems Addressed During Development
+
+<Bullet list of noteworthy problems, surprises, or non-obvious decisions encountered while
+implementing. Include things like: edge cases discovered, design pivots, test failures that
+revealed bugs, refactoring decisions, or constraints that shaped the solution.>
+
+- …
+- …
+
+---
+
+## Files Changed
+
+<List of files that were created or modified as part of this task.>
+
+- `path/to/File.java` — <one-line description of the change>
+- …
+```
+
+Fill every section with real content from the implementation — do not leave the template text.
+
 Always append a Changelog row whenever the status changes.
 
 ---
