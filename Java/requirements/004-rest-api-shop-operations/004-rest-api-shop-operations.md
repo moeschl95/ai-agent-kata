@@ -56,7 +56,11 @@ beans without touching any domain classes.
 
 ## Notes
 
-No conflicts — all prior tasks (001, 002, 003) are `done`.
+No conflicts with tasks 001–003 (all `done`).
+
+**Conflict noted with 005 (`005-item-state-projection`, status: `funnel`)**: task 005 adds a
+projection endpoint to the `ShopController` introduced here. Implement task 004 first to avoid
+merge conflicts in `ShopController` and its `@WebMvcTest` test class.
 
 The `PricingService.priceFor(Item)` signature requires an `Item` instance, so the price endpoint
 will look up the item by name in `GildedRose.items` before calling the service. If the shop holds
@@ -70,3 +74,4 @@ multiple items with the same name, the first match is used.
 |------|--------|------|
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-25 | ready-for-development | Conflict noted with 005-item-state-projection: both touch ShopController |
