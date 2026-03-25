@@ -1,14 +1,15 @@
 # 005 — Item State Projection
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
 ## Description
 
-Users need to simulate what state an item will be in after a given number of days — without
+Users need to simulate what state items will be in after a given number of days — without
 mutating the real inventory. Given an item name and a number of days `n`, the system should return
 the projected `sellIn` and `quality` values as they would be after `n` daily `updateQuality` ticks.
+Additionally, users should be able to project the entire shop inventory forward by `n` days.
 This is a read-only, non-destructive operation: the live shop state must never be modified.
 
 ---
@@ -21,8 +22,13 @@ This is a read-only, non-destructive operation: the live shop state must never b
      - Projects Aged Brie, Backstage Passes, Sulfuras, and Conjured items correctly.
      - Returns the original state when `days = 0`.
      - Handles `days` larger than `sellIn` (item expires mid-projection).
-   - `@WebMvcTest` slice tests for the new REST endpoint (depends on task 004 being in place):
+   - Unit tests for `ProjectionService.projectAll(Item[] items, int days)` method:
+     - Projects all items in the array forward by `n` days.
+     - Returns original states when `days = 0`.
+     - Handles empty arrays.
+   - `@WebMvcTest` slice tests for the new REST endpoints (depends on task 004 being in place):
      - `GET /items/{name}/projection?days=n` returns HTTP 200 with projected `name`, `sellIn`, `quality`.
+     - `GET /items/projection?days=n` returns HTTP 200 with array of all projected items.
      - Returns HTTP 404 when the item name is not found in the inventory.
      - Returns HTTP 400 when `days` is negative.
 
@@ -31,9 +37,11 @@ This is a read-only, non-destructive operation: the live shop state must never b
    - Deep-copies the item to avoid mutating the original, then runs `updateQuality` logic
      `n` times on the copy using the existing `ItemUpdaterFactory`.
    - Returns an `ItemDto` (or a dedicated `ProjectionDto`) with the projected state.
+   - Add `projectAll(Item[] items, int days)` method that projects each item individually.
 
-3. **Extend `ShopController`** (introduced in task 004) with the new endpoint:
+3. **Extend `ShopController`** (introduced in task 004) with the new endpoints:
    - `GET /items/{name}/projection?days=n`
+   - `GET /items/projection?days=n`
    - Validates that `days >= 0`; returns `400 Bad Request` otherwise.
    - Looks up the first item matching `{name}` in `GildedRose.items`; returns `404` if not found.
    - Delegates projection to `ProjectionService` and returns the result as JSON.
@@ -48,15 +56,17 @@ This is a read-only, non-destructive operation: the live shop state must never b
 
 ## Acceptance Criteria
 
-- [ ] `GET /items/{name}/projection?days=5` returns HTTP 200 with the item's projected `name`, `sellIn`, and `quality` after 5 days.
-- [ ] The live shop inventory is not mutated by a projection request.
-- [ ] `days=0` returns the item's current state unchanged.
-- [ ] Returns HTTP 404 when no item with the given name exists in the inventory.
-- [ ] Returns HTTP 400 when `days` is negative.
-- [ ] Projection is correct for all item types: Normal, Aged Brie, Backstage Passes, Sulfuras, Conjured.
-- [ ] All new behaviour is covered by tests written before production code (TDD).
-- [ ] All existing tests continue to pass.
-- [ ] `Item.java` is not modified.
+- [x] `GET /items/{name}/projection?days=5` returns HTTP 200 with the item's projected `name`, `sellIn`, and `quality` after 5 days.
+- [x] `GET /items/projection?days=5` returns HTTP 200 with array of all items' projected `name`, `sellIn`, and `quality` after 5 days.
+- [x] The live shop inventory is not mutated by a projection request.
+- [x] `days=0` returns the item's current state unchanged.
+- [x] `days=0` returns all items' current states unchanged.
+- [x] Returns HTTP 404 when no item with the given name exists in the inventory.
+- [x] Returns HTTP 400 when `days` is negative.
+- [x] Projection is correct for all item types: Normal, Aged Brie, Backstage Passes, Sulfuras, Conjured.
+- [x] All new behaviour is covered by tests written before production code (TDD).
+- [x] All existing tests continue to pass.
+- [x] `Item.java` is not modified.
 
 ---
 
@@ -88,3 +98,8 @@ and returning the result — keeping the original `GildedRose` bean's state unto
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
 | 2026-03-25 | ready-for-development | Conflict noted with 006-in-memory-item-persistence: GildedRose.items field preserved; recommended order 006 → 004 → 005 |
+| 2026-03-25 | in-progress | Implementation started |
+| 2026-03-25 | implemented | Added ProjectionService and GET /api/items/{name}/projection endpoint; 13 tests added, all pass |
+| 2026-03-25 | in-progress | User requested bulk projection endpoint; extending task scope |
+| 2026-03-25 | implemented | Added bulk projection: ProjectionService.projectAll() and GET /api/items/projection endpoint; 17 total tests added, all pass |
+| 2026-03-25 | done | Accepted by user |

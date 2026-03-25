@@ -8,6 +8,6 @@ This file is auto-maintained. It is updated every time a task is created or its 
 | 002 | Dual-Type Conjured Items | done | Items named "Conjured <Type>" (e.g. Conjured Aged Brie, Conjured Backstage passes) follow the base type's quality rules with every delta doubled by the Conjured modifier. |
 | 003 | Spring Boot Migration  | done | Migrate the project to Spring Boot 3.x, wiring GildedRose and PricingService as managed beans and exposing shop operations via a REST API. |
 | 004 | REST API for Shop Operations | done | Add a REST API so clients can list inventory, retrieve item prices, and advance the shop by one day. |
-| 005 | Item State Projection | ready-for-development | Simulate the state an item will have after n days without mutating the live inventory. |
+| 005 | Item State Projection | done | Simulate the state an item will have after n days without mutating the live inventory. |
 | 006 | In-Memory Item Persistence | ready-for-development | Persist items using Spring Data JPA with H2 in-memory; architecture makes swapping to MariaDB a config-only change. |
 | 007 | Remove Maven Build | ready-for-development | Remove all Maven files (pom.xml, mvnw, .mvn/, target/) so Gradle is the sole build tool. |

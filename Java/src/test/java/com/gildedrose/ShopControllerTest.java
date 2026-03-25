@@ -8,6 +8,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.List;
+
 import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -21,12 +23,15 @@ class ShopControllerTest {
     @Mock
     private PricingService pricingService;
 
+    @Mock
+    private ProjectionService projectionService;
+
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
         gildedRose = new GildedRose(new Item[]{});
-        ShopController shopController = new ShopController(gildedRose, pricingService);
+        ShopController shopController = new ShopController(gildedRose, pricingService, projectionService);
         mockMvc = MockMvcBuilders.standaloneSetup(shopController).build();
     }
 
@@ -91,5 +96,73 @@ class ShopControllerTest {
 
         mockMvc.perform(get("/api/items/UnknownItem/price"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void should_returnProjectedItem_when_projectionEndpointIsCalled() throws Exception {
+        Item item = new Item("Normal item", 10, 20);
+        gildedRose.items = new Item[]{item};
+        ItemDto projectedItem = new ItemDto("Normal item", 9, 19);
+
+        when(projectionService.project(item, 1)).thenReturn(projectedItem);
+
+        mockMvc.perform(get("/api/items/Normal item/projection?days=1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.name", equalTo("Normal item")))
+                .andExpect(jsonPath("$.sellIn", equalTo(9)))
+                .andExpect(jsonPath("$.quality", equalTo(19)));
+    }
+
+    @Test
+    void should_returnNotFound_when_projectionForUnknownItem() throws Exception {
+        gildedRose.items = new Item[]{};
+
+        mockMvc.perform(get("/api/items/UnknownItem/projection?days=1"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    void should_returnBadRequest_when_projectionWithNegativeDays() throws Exception {
+        Item item = new Item("Normal item", 10, 20);
+        gildedRose.items = new Item[]{item};
+
+        mockMvc.perform(get("/api/items/Normal item/projection?days=-1"))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void should_returnProjectedItems_when_bulkProjectionEndpointIsCalled() throws Exception {
+        Item[] items = new Item[]{
+                new Item("Normal item", 10, 20),
+                new Item("Aged Brie", 5, 10)
+        };
+        gildedRose.items = items;
+        List<ItemDto> projectedItems = List.of(
+                new ItemDto("Normal item", 9, 19),
+                new ItemDto("Aged Brie", 4, 11)
+        );
+
+        when(projectionService.projectAll(items, 1)).thenReturn(projectedItems);
+
+        mockMvc.perform(get("/api/items/projection?days=1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].name", equalTo("Normal item")))
+                .andExpect(jsonPath("$[0].sellIn", equalTo(9)))
+                .andExpect(jsonPath("$[0].quality", equalTo(19)))
+                .andExpect(jsonPath("$[1].name", equalTo("Aged Brie")))
+                .andExpect(jsonPath("$[1].sellIn", equalTo(4)))
+                .andExpect(jsonPath("$[1].quality", equalTo(11)));
+    }
+
+    @Test
+    void should_returnBadRequest_when_bulkProjectionWithNegativeDays() throws Exception {
+        Item[] items = new Item[]{
+                new Item("Normal item", 10, 20)
+        };
+        gildedRose.items = items;
+
+        mockMvc.perform(get("/api/items/projection?days=-1"))
+                .andExpect(status().isBadRequest());
     }
 }
