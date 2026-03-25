@@ -1,6 +1,6 @@
 # 008 — Angular Frontend Bootstrap
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -101,3 +101,6 @@ No conflicts with existing backend tasks 001–007.
 |------|--------|------|
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-25 | in-progress | Implementation started |
+| 2026-03-25 | implemented | Angular 15 app scaffolded, Clarity integrated, ShopService with 5 methods implemented, all 5 tests pass |
+| 2026-03-25 | done | Accepted by user; ready for tasks 009-012 |
