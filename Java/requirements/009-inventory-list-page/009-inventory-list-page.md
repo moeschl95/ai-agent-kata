@@ -1,6 +1,6 @@
 # 009 — Inventory List Page
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -79,3 +79,6 @@ focused and achievable in a single session.
 |------|--------|------|
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-25 | in-progress | Implementation started |
+| 2026-03-25 | implemented | Component, template, and tests implemented. All 3 acceptance criteria tests pass (8 total tests passing) |
+| 2026-03-25 | done | Accepted by user |
