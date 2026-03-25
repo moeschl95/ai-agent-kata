@@ -1,6 +1,6 @@
 # 010 — Advance Day Action
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -73,3 +73,6 @@ Depends on task 009 (Inventory List Page) being completed first.
 |------|--------|------|
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-25 | in-progress | Implementation started |
+| 2026-03-25 | implemented | Advance Day button, advanceDay method, and 5 new tests implemented. All 13 tests passing (8 original + 5 new) |
+| 2026-03-25 | done | Accepted by user |

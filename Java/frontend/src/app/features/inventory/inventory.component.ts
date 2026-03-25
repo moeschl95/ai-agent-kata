@@ -18,6 +18,7 @@ export class InventoryComponent implements OnInit, OnDestroy {
 
   items: ShopItem[] = [];
   loading = false;
+  advancing = false;
   error: string | null = null;
 
   ngOnInit(): void {
@@ -29,20 +30,43 @@ export class InventoryComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
+  advanceDay(): void {
+    this.executeAction(
+      () => this.shopService.advanceDay(),
+      () => this.advancing = true,
+      () => this.advancing = false,
+      'Failed to advance day'
+    );
+  }
+
   private load(): void {
-    this.loading = true;
+    this.executeAction(
+      () => this.shopService.getItems(),
+      () => this.loading = true,
+      () => this.loading = false,
+      'Failed to load inventory'
+    );
+  }
+
+  private executeAction(
+    serviceCall: () => any,
+    onStart: () => void,
+    onComplete: () => void,
+    errorMessage: string
+  ): void {
+    onStart();
     this.error = null;
-    this.shopService.getItems()
+    serviceCall()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (items) => {
+        next: (items: ShopItem[]) => {
           this.items = items;
-          this.loading = false;
+          onComplete();
         },
-        error: (err) => {
-          this.loading = false;
-          this.error = 'Failed to load inventory';
-          console.error('Error loading items:', err);
+        error: (err: any) => {
+          onComplete();
+          this.error = errorMessage;
+          console.error(errorMessage, ':', err);
         }
       });
   }
