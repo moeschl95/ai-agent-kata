@@ -13,6 +13,29 @@ description: >
 
 This skill guides analysis of the Gilded Rose codebase for code smells, then applies appropriate design patterns to produce clean, extensible Java code.
 
+> **Workflow summary:**
+> Phase 0 → analyse → Phase 1 → recommend → **propose & wait for approval** → **measure & raise coverage** → Phase 3 → refactor → Phase 4
+
+---
+
+## Phase 0: Proposal & Approval
+
+Before doing any analysis or writing any code, present a short proposal to the user and **stop until they approve it**.
+
+The proposal must include:
+
+1. **Scope** — which file(s) or class(es) will be changed.
+2. **Smells identified (preview)** — a brief bullet list of the top code smells visible at first glance.
+3. **Patterns to be applied (preview)** — which pattern(s) you intend to recommend and why (one sentence each).
+4. **Files that will change or be created** — a table listing each file and whether it will be modified, created, or deleted.
+5. **Files that will NOT be touched** — explicitly call out `Item.java` and any other protected files.
+6. **Approval gate** — end the proposal with a clear prompt, e.g.:
+   > "Does this plan look good? Reply **yes** to proceed, or let me know what you'd like to change."
+
+Do **not** proceed to Phase 1 until the user has explicitly approved the proposal.
+
+---
+
 ## Phase 1: Code Analysis
 
 Before refactoring, read the source files and identify smells. Start with:
@@ -57,6 +80,52 @@ Read only the reference files relevant to the patterns you are recommending. Eac
 - Pitfalls to avoid
 
 Present the recommended pattern(s) to the user with a brief rationale before writing code.
+
+---
+
+## Phase 2.5: Coverage Gate
+
+Before touching any production code, measure the current branch and line coverage of every class that will be modified or deleted during the refactor.
+
+### Step 1 — Run coverage
+
+```bash
+# Windows
+.\gradlew.bat test jacocoTestReport
+# Unix/Mac
+./gradlew test jacocoTestReport
+```
+
+The XML report is at: `build/reports/jacoco/test/jacocoTestReport.xml`
+
+For each class in scope, extract **BRANCH** and **LINE** coverage numbers.
+
+### Step 2 — Evaluate the gate
+
+| Branch coverage of classes in scope | Action |
+|--------------------------------------|--------|
+| ≥ 80% | ✅ Proceed to Phase 3 immediately |
+| < 80% | ⚠️ Write characterization tests first (see Step 3) |
+
+> **Why 80%?** Refactoring moves code into new classes. If a branch is untested before the move, a silent behaviour change will go undetected. 80% branch coverage means the critical paths are protected.
+
+### Step 3 — Write characterization tests (if needed)
+
+For each uncovered branch, write a JUnit 5 test that pins the **current** behaviour — even if that behaviour looks wrong. The goal is a safety net, not correctness.
+
+Use the naming convention: `should_<expected>_when_<condition>`.
+
+After adding tests, re-run coverage and confirm the gate is met before continuing.
+
+### Step 4 — Report to the user
+
+Briefly summarise:
+- Coverage before (branch % per class)
+- Tests added (if any), with names
+- Coverage after (branch % per class)
+- Confirmation that the gate is met
+
+Only then proceed to Phase 3.
 
 ---
 
