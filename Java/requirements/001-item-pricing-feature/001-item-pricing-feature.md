@@ -60,3 +60,4 @@ The shop needs a pricing system for its inventory. Every item has a base price s
 |------|--------|------|
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-25 | ready-for-development | Conflict noted with 002-dual-type-conjured-items: both tasks touch ItemUpdaterFactory.java (002 adds forItem() logic; 001 reads SULFURAS constant only — no direct conflict, coordinate if worked simultaneously) |
