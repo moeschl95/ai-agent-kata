@@ -115,7 +115,7 @@ public class ShopService {
 
     private List<ItemDto> mapToDto(final List<Item> items) {
         return items.stream()
-                .map(item -> new ItemDto(item.name, item.sellIn, item.quality))
+                .map(item -> new ItemDto(item.name, item.sellIn, item.quality, pricingService.priceFor(item)))
                 .toList();
     }
 

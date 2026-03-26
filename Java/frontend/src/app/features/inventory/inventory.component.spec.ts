@@ -28,8 +28,8 @@ describe('InventoryComponent', () => {
   it('should_displayItems_when_itemsAreLoaded', () => {
     // Arrange
     const mockItems: ShopItem[] = [
-      { name: 'Aged Brie', sellIn: 5, quality: 20 },
-      { name: 'Sulfuras', sellIn: -1, quality: 80 }
+      { name: 'Aged Brie', sellIn: 5, quality: 20, price: 50 },
+      { name: 'Sulfuras', sellIn: -1, quality: 80, price: 100 }
     ];
     shopService.getItems.and.returnValue(of(mockItems));
 
@@ -40,6 +40,45 @@ describe('InventoryComponent', () => {
     const html = fixture.nativeElement.innerHTML;
     expect(html).toContain('Aged Brie');
     expect(html).toContain('Sulfuras');
+  });
+
+  it('should_displayPriceColumn_when_itemsAreLoaded', () => {
+    // Arrange
+    const mockItems: ShopItem[] = [
+      { name: 'Aged Brie', sellIn: 5, quality: 20, price: 50 },
+      { name: 'Normal item', sellIn: 10, quality: 15, price: 25 }
+    ];
+    shopService.getItems.and.returnValue(of(mockItems));
+
+    // Act
+    fixture.detectChanges();
+
+    // Assert
+    const html = fixture.nativeElement.innerHTML;
+    expect(html).toContain('Price'); // Column header
+    expect(html).toContain('50'); // First item price
+    expect(html).toContain('25'); // Second item price
+  });
+
+  it('should_displayPriceColumnsForAllItems_when_multipleItemsExist', () => {
+    // Arrange
+    const mockItems: ShopItem[] = [
+      { name: 'Aged Brie', sellIn: 5, quality: 20, price: 50 },
+      { name: 'Sulfuras', sellIn: -1, quality: 80, price: 100 },
+      { name: 'Normal item', sellIn: 10, quality: 15, price: 25 }
+    ];
+    shopService.getItems.and.returnValue(of(mockItems));
+
+    // Act
+    fixture.detectChanges();
+
+    // Assert - Verify price column header exists
+    const columnHeaders = fixture.debugElement.queryAll(By.css('clr-dg-column'));
+    expect(columnHeaders.length).toBeGreaterThan(0);
+    const priceHeaderExists = columnHeaders.some(header => 
+      (header.nativeElement as HTMLElement).textContent?.includes('Price')
+    );
+    expect(priceHeaderExists).toBe(true);
   });
 
   it('should_showLoadingSpinner_when_requestIsInFlight', () => {
@@ -95,8 +134,8 @@ describe('InventoryComponent', () => {
 
   it('should_refreshInventory_when_advanceDaySucceeds', () => {
     // Arrange
-    const initialItems: ShopItem[] = [{ name: 'Aged Brie', sellIn: 5, quality: 20 }];
-    const updatedItems: ShopItem[] = [{ name: 'Aged Brie', sellIn: 4, quality: 21 }];
+    const initialItems: ShopItem[] = [{ name: 'Aged Brie', sellIn: 5, quality: 20, price: 50 }];
+    const updatedItems: ShopItem[] = [{ name: 'Aged Brie', sellIn: 4, quality: 21, price: 50 }];
     shopService.getItems.and.returnValue(of(initialItems));
     shopService.advanceDay.and.returnValue(of(updatedItems));
     fixture.detectChanges();

@@ -20,6 +20,6 @@ This file is auto-maintained. It is updated every time a task is created or its 
 | 014 | Clean Architecture & DDD Refactor | done | Reorganise the backend into explicit Clean Architecture layers (domain, application, infrastructure, api) so that dependencies always point inward and each layer is independently testable. |
 | 015 | Inventory Table Sorting | done | Server-side sorting for the inventory table: `GET /api/items` gains `sortBy` and `sortDir` query params; the Angular frontend sends sort state from Clarity column header clicks to the backend. |
 | 016 | OpenAPI REST Specification | done | Auto-generate OpenAPI 3.0 specification from Spring Boot REST API using springdoc-openapi; expose spec at `/v3/openapi.json` and Swagger UI at `/swagger-ui.html`. |
-| 017 | Inventory Price Column | ready-for-development | Add a price column to the inventory datagrid showing the cost of each item; column is read-only and not sortable. |
+| 017 | Inventory Price Column | implemented | Add a price column to the inventory datagrid showing the cost of each item; column is read-only and not sortable. |
 | 018 | Table Descending Sort Support | ready-for-development | Enable toggle between ascending and descending sort orders in the inventory table; users can click a column header to sort ascending, then click again to sort descending. |
 | 019 | Single Projection Item Dropdown | ready-for-development | Replace the plain text input in Single Item Projection with a dropdown select list of available inventory items. |

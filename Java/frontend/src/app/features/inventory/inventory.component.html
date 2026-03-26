@@ -24,11 +24,13 @@
       <clr-dg-column [clrDgSortBy]="'name'">Name</clr-dg-column>
       <clr-dg-column [clrDgSortBy]="'sellIn'">Sell In</clr-dg-column>
       <clr-dg-column [clrDgSortBy]="'quality'">Quality</clr-dg-column>
+      <clr-dg-column>Price</clr-dg-column>
 
       <clr-dg-row *ngFor="let item of items" [ngClass]="{ 'text-danger': item.sellIn <= 0 }">
         <clr-dg-cell>{{ item.name }}</clr-dg-cell>
         <clr-dg-cell>{{ item.sellIn }}</clr-dg-cell>
         <clr-dg-cell>{{ item.quality }}</clr-dg-cell>
+        <clr-dg-cell>{{ item.price | currency }}</clr-dg-cell>
       </clr-dg-row>
     </clr-datagrid>
   </div>

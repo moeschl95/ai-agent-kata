@@ -77,8 +77,8 @@ describe('ProjectionComponent', () => {
   it('should_callProjectAll_when_validFormIsSubmitted', () => {
     // Arrange
     const mockItems: ProjectedItem[] = [
-      { name: 'Item 1', sellIn: 5, quality: 20 },
-      { name: 'Item 2', sellIn: 3, quality: 30 }
+      { name: 'Item 1', sellIn: 5, quality: 20, price: 25 },
+      { name: 'Item 2', sellIn: 3, quality: 30, price: 40 }
     ];
     shopService.projectAll.and.returnValue(of(mockItems));
     component.bulkForm.get('days')?.setValue(5);
@@ -93,8 +93,8 @@ describe('ProjectionComponent', () => {
   it('should_displayProjectedItems_when_bulkProjectionSucceeds', (done) => {
     // Arrange
     const mockItems: ProjectedItem[] = [
-      { name: 'Aged Brie', sellIn: 2, quality: 23 },
-      { name: 'Sulfuras', sellIn: -1, quality: 80 }
+      { name: 'Aged Brie', sellIn: 2, quality: 23, price: 50 },
+      { name: 'Sulfuras', sellIn: -1, quality: 80, price: 100 }
     ];
     shopService.projectAll.and.returnValue(of(mockItems));
     component.bulkForm.get('days')?.setValue(3);
@@ -189,7 +189,7 @@ describe('ProjectionComponent', () => {
 
   it('should_callProjectItem_when_itemFormIsValid', () => {
     // Arrange
-    const mockItem: ProjectedItem = { name: 'Aged Brie', sellIn: 2, quality: 23 };
+    const mockItem: ProjectedItem = { name: 'Aged Brie', sellIn: 2, quality: 23, price: 50 };
     shopService.projectItem.and.returnValue(of(mockItem));
     component.itemForm.get('itemName')?.setValue('Aged Brie');
     component.itemForm.get('days')?.setValue(3);
@@ -203,7 +203,7 @@ describe('ProjectionComponent', () => {
 
   it('should_displayProjectedItem_when_itemProjectionSucceeds', (done) => {
     // Arrange
-    const mockItem: ProjectedItem = { name: 'Aged Brie', sellIn: 2, quality: 23 };
+    const mockItem: ProjectedItem = { name: 'Aged Brie', sellIn: 2, quality: 23, price: 50 };
     shopService.projectItem.and.returnValue(of(mockItem));
     component.itemForm.get('itemName')?.setValue('Aged Brie');
     component.itemForm.get('days')?.setValue(3);
@@ -255,9 +255,9 @@ describe('ProjectionComponent', () => {
   it('should_highlightDangerRows_when_projectedSellInIsZeroOrNegative', (done) => {
     // Arrange
     const mockItems: ProjectedItem[] = [
-      { name: 'Aged Brie', sellIn: 5, quality: 20 },
-      { name: 'Expired', sellIn: 0, quality: 10 },
-      { name: 'Very Expired', sellIn: -1, quality: 5 }
+      { name: 'Aged Brie', sellIn: 5, quality: 20, price: 50 },
+      { name: 'Expired', sellIn: 0, quality: 10, price: 15 },
+      { name: 'Very Expired', sellIn: -1, quality: 5, price: 10 }
     ];
     shopService.projectAll.and.returnValue(of(mockItems));
     component.bulkForm.get('days')?.setValue(10);

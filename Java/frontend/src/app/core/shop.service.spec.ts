@@ -22,7 +22,7 @@ describe('ShopService', () => {
 
   it('should_returnItems_when_getItemsIsCalled', () => {
     const mockItems: ShopItem[] = [
-      { name: 'Aged Brie', sellIn: 10, quality: 20 }
+      { name: 'Aged Brie', sellIn: 10, quality: 20, price: 50 }
     ];
 
     service.getItems().subscribe(items => {
@@ -36,7 +36,7 @@ describe('ShopService', () => {
 
   it('should_returnUpdatedItems_when_advanceDayIsCalled', () => {
     const mockItems: ShopItem[] = [
-      { name: 'Aged Brie', sellIn: 9, quality: 21 }
+      { name: 'Aged Brie', sellIn: 9, quality: 21, price: 50 }
     ];
 
     service.advanceDay().subscribe(items => {
@@ -64,7 +64,8 @@ describe('ShopService', () => {
     const mockProjected: ProjectedItem = {
       name: 'Aged Brie',
       sellIn: 5,
-      quality: 25
+      quality: 25,
+      price: 50
     };
 
     service.projectItem('Aged Brie', 5).subscribe(item => {
@@ -80,8 +81,8 @@ describe('ShopService', () => {
 
   it('should_returnProjectedItems_when_projectAllIsCalled', () => {
     const mockProjected: ProjectedItem[] = [
-      { name: 'Aged Brie', sellIn: 5, quality: 25 },
-      { name: '+5 Dexterity Vest', sellIn: 15, quality: 18 }
+      { name: 'Aged Brie', sellIn: 5, quality: 25, price: 50 },
+      { name: '+5 Dexterity Vest', sellIn: 15, quality: 18, price: 30 }
     ];
 
     service.projectAll(5).subscribe(items => {

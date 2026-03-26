@@ -12,6 +12,17 @@ import java.util.List;
 @Service
 public class ProjectionService {
 
+    private final PricingService pricingService;
+
+    /**
+     * Constructs the projection service with the pricing service dependency.
+     *
+     * @param pricingService the service for computing item prices
+     */
+    public ProjectionService(final PricingService pricingService) {
+        this.pricingService = pricingService;
+    }
+
     /**
      * Projects the state of a single item after the given number of days.
      * The original item is not modified.
@@ -27,7 +38,7 @@ public class ProjectionService {
         for (int i = 0; i < days; i++) {
             ItemUpdaterFactory.forItem(projectedItem).update(projectedItem);
         }
-        return new ItemDto(projectedItem.name, projectedItem.sellIn, projectedItem.quality);
+        return new ItemDto(projectedItem.name, projectedItem.sellIn, projectedItem.quality, pricingService.priceFor(projectedItem));
     }
 
     /**

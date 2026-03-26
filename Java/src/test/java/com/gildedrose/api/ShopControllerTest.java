@@ -35,8 +35,8 @@ class ShopControllerTest {
     @Test
     void should_returnAllItems_when_getItemsEndpointIsCalled() throws Exception {
         List<ItemDto> items = List.of(
-                new ItemDto("Aged Brie", 10, 20),
-                new ItemDto("Normal item", 5, 15)
+                new ItemDto("Aged Brie", 10, 20, 50),
+                new ItemDto("Normal item", 5, 15, 25)
         );
         when(shopService.getAllItems(null, null)).thenReturn(items);
 
@@ -63,7 +63,7 @@ class ShopControllerTest {
     @Test
     void should_updateQualityAndReturnUpdatedItems_when_advanceDayEndpointIsCalled() throws Exception {
         List<ItemDto> items = List.of(
-                new ItemDto("Normal item", 5, 10)
+                new ItemDto("Normal item", 5, 10, 25)
         );
         when(shopService.advanceDay()).thenReturn(items);
 
@@ -92,7 +92,7 @@ class ShopControllerTest {
 
     @Test
     void should_returnProjectedItem_when_projectionEndpointIsCalled() throws Exception {
-        ItemDto projectedItem = new ItemDto("Normal item", 9, 19);
+        ItemDto projectedItem = new ItemDto("Normal item", 9, 19, 25);
         when(shopService.projectItem("Normal item", 1)).thenReturn(projectedItem);
 
         mockMvc.perform(get("/api/items/Normal item/projection?days=1"))
@@ -119,8 +119,8 @@ class ShopControllerTest {
     @Test
     void should_returnProjectedItems_when_bulkProjectionEndpointIsCalled() throws Exception {
         List<ItemDto> projectedItems = List.of(
-                new ItemDto("Normal item", 9, 19),
-                new ItemDto("Aged Brie", 4, 11)
+                new ItemDto("Normal item", 9, 19, 25),
+                new ItemDto("Aged Brie", 4, 11, 50)
         );
         when(shopService.projectAllItems(1)).thenReturn(projectedItems);
 
@@ -144,9 +144,9 @@ class ShopControllerTest {
     @Test
     void should_returnItemsSortedByNameAsc_when_sortByNameAscParamsProvided() throws Exception {
         List<ItemDto> items = List.of(
-                new ItemDto("Aged Brie", 10, 20),
-                new ItemDto("Normal item", 5, 15),
-                new ItemDto("Sulfuras", 0, 80)
+                new ItemDto("Aged Brie", 10, 20, 50),
+                new ItemDto("Normal item", 5, 15, 25),
+                new ItemDto("Sulfuras", 0, 80, 100)
         );
         when(shopService.getAllItems("name", "asc")).thenReturn(items);
 
@@ -161,9 +161,9 @@ class ShopControllerTest {
     @Test
     void should_returnItemsSortedByNameDesc_when_sortByNameDescParamsProvided() throws Exception {
         List<ItemDto> items = List.of(
-                new ItemDto("Sulfuras", 0, 80),
-                new ItemDto("Normal item", 5, 15),
-                new ItemDto("Aged Brie", 10, 20)
+                new ItemDto("Sulfuras", 0, 80, 100),
+                new ItemDto("Normal item", 5, 15, 25),
+                new ItemDto("Aged Brie", 10, 20, 50)
         );
         when(shopService.getAllItems("name", "desc")).thenReturn(items);
 
@@ -178,9 +178,9 @@ class ShopControllerTest {
     @Test
     void should_returnItemsSortedBySellInAsc_when_sortBySellInAscParamsProvided() throws Exception {
         List<ItemDto> items = List.of(
-                new ItemDto("Sulfuras", 0, 80),
-                new ItemDto("Normal item", 5, 15),
-                new ItemDto("Aged Brie", 10, 20)
+                new ItemDto("Sulfuras", 0, 80, 100),
+                new ItemDto("Normal item", 5, 15, 25),
+                new ItemDto("Aged Brie", 10, 20, 50)
         );
         when(shopService.getAllItems("sellIn", "asc")).thenReturn(items);
 
@@ -194,9 +194,9 @@ class ShopControllerTest {
     @Test
     void should_returnItemsSortedBySellInDesc_when_sortBySellInDescParamsProvided() throws Exception {
         List<ItemDto> items = List.of(
-                new ItemDto("Aged Brie", 10, 20),
-                new ItemDto("Normal item", 5, 15),
-                new ItemDto("Sulfuras", 0, 80)
+                new ItemDto("Aged Brie", 10, 20, 50),
+                new ItemDto("Normal item", 5, 15, 25),
+                new ItemDto("Sulfuras", 0, 80, 100)
         );
         when(shopService.getAllItems("sellIn", "desc")).thenReturn(items);
 
@@ -210,9 +210,9 @@ class ShopControllerTest {
     @Test
     void should_returnItemsSortedByQualityAsc_when_sortByQualityAscParamsProvided() throws Exception {
         List<ItemDto> items = List.of(
-                new ItemDto("Normal item", 5, 15),
-                new ItemDto("Aged Brie", 10, 20),
-                new ItemDto("Sulfuras", 0, 80)
+                new ItemDto("Normal item", 5, 15, 25),
+                new ItemDto("Aged Brie", 10, 20, 50),
+                new ItemDto("Sulfuras", 0, 80, 100)
         );
         when(shopService.getAllItems("quality", "asc")).thenReturn(items);
 
@@ -226,9 +226,9 @@ class ShopControllerTest {
     @Test
     void should_returnItemsSortedByQualityDesc_when_sortByQualityDescParamsProvided() throws Exception {
         List<ItemDto> items = List.of(
-                new ItemDto("Sulfuras", 0, 80),
-                new ItemDto("Aged Brie", 10, 20),
-                new ItemDto("Normal item", 5, 15)
+                new ItemDto("Sulfuras", 0, 80, 100),
+                new ItemDto("Aged Brie", 10, 20, 50),
+                new ItemDto("Normal item", 5, 15, 25)
         );
         when(shopService.getAllItems("quality", "desc")).thenReturn(items);
 
@@ -242,8 +242,8 @@ class ShopControllerTest {
     @Test
     void should_returnItemsInDefaultOrder_when_noSortParamsProvided() throws Exception {
         List<ItemDto> items = List.of(
-                new ItemDto("Aged Brie", 10, 20),
-                new ItemDto("Normal item", 5, 15)
+                new ItemDto("Aged Brie", 10, 20, 50),
+                new ItemDto("Normal item", 5, 15, 25)
         );
         when(shopService.getAllItems(null, null)).thenReturn(items);
 
@@ -257,8 +257,8 @@ class ShopControllerTest {
     @Test
     void should_returnItemsInDefaultOrder_when_invalidSortByProvided() throws Exception {
         List<ItemDto> items = List.of(
-                new ItemDto("Aged Brie", 10, 20),
-                new ItemDto("Normal item", 5, 15)
+                new ItemDto("Aged Brie", 10, 20, 50),
+                new ItemDto("Normal item", 5, 15, 25)
         );
         when(shopService.getAllItems("invalid", "asc")).thenReturn(items);
 
@@ -266,4 +266,25 @@ class ShopControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
     }
+
+    @Test
+    void should_includePriceInResponse_when_getItemsEndpointIsCalled() throws Exception {
+        List<ItemDto> items = List.of(
+                new ItemDto("Aged Brie", 10, 20, 50),
+                new ItemDto("Normal item", 5, 15, 25),
+                new ItemDto("Sulfuras", 0, 80, 100)
+        );
+        when(shopService.getAllItems(null, null)).thenReturn(items);
+
+        mockMvc.perform(get("/api/items"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(3)))
+                .andExpect(jsonPath("$[0].name", equalTo("Aged Brie")))
+                .andExpect(jsonPath("$[0].price", equalTo(50)))
+                .andExpect(jsonPath("$[1].name", equalTo("Normal item")))
+                .andExpect(jsonPath("$[1].price", equalTo(25)))
+                .andExpect(jsonPath("$[2].name", equalTo("Sulfuras")))
+                .andExpect(jsonPath("$[2].price", equalTo(100)));
+    }
 }
+

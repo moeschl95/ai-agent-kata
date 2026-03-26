@@ -2,15 +2,33 @@ package com.gildedrose.domain.service;
 
 import com.gildedrose.application.dto.ItemDto;
 import com.gildedrose.domain.model.Item;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.lenient;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class ProjectionServiceTest {
 
-    private final ProjectionService projectionService = new ProjectionService();
+    @Mock
+    private PricingService pricingService;
+
+    private ProjectionService projectionService;
+
+    @BeforeEach
+    void setUp() {
+        projectionService = new ProjectionService(pricingService);
+        // Mock pricing service to return a fixed price for any item (lenient to allow unused stubs)
+        lenient().when(pricingService.priceFor(any())).thenReturn(25);
+    }
 
     @Test
     void should_returnOriginalState_when_daysIsZero() {

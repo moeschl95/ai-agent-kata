@@ -48,6 +48,12 @@ public class GildedRoseConfiguration {
     @Value("${gilded-rose.base-prices.normal-item:20}")
     private int normalItemPrice;
 
+    @Value("${gilded-rose.base-prices.dexterity-vest:40}")
+    private int dexterityVestPrice;
+
+    @Value("${gilded-rose.base-prices.elixir-of-the-mongoose:60}")
+    private int elixirOfTheMongoosePrice;
+
     /**
      * Creates and configures a {@link PricingService} bean using application properties.
      *
@@ -61,6 +67,8 @@ public class GildedRoseConfiguration {
         basePrices.put("Conjured Mana Cake", conjuredManaCakePrice);
         basePrices.put("Sulfuras, Hand of Ragnaros", sulfurasPrice);
         basePrices.put("Normal item", normalItemPrice);
+        basePrices.put("+5 Dexterity Vest", dexterityVestPrice);
+        basePrices.put("Elixir of the Mongoose", elixirOfTheMongoosePrice);
 
         return new DefaultPricingService(basePrices, expiredDiscountRate, legendaryPrice);
     }
