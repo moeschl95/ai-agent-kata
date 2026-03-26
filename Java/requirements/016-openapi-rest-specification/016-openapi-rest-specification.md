@@ -1,6 +1,6 @@
 # 016 — OpenAPI REST Specification
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -75,3 +75,6 @@ The Gilded Rose shop REST API (built in task 004) currently lacks formal API doc
 |------|--------|------|
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-25 | in-progress | Implementation started |
+| 2026-03-25 | implemented | Completed - OpenAPI spec auto-generation enabled with springdoc-openapi, ShopController decorated with OpenAPI annotations, integration tests verify spec is generated correctly
+| 2026-03-26 | done | Approved by user
