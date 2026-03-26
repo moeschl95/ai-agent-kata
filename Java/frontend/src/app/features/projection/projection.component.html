@@ -1,0 +1,162 @@
+<div class="content-container">
+  <div class="content-area">
+    <h2>Shop Projection</h2>
+
+    <!-- Bulk Projection Section -->
+    <div class="projection-section">
+      <h3>Bulk Projection</h3>
+      <p>View all items projected forward by a number of days</p>
+
+      <!-- Bulk Projection Form -->
+      <form [formGroup]="bulkForm" (ngSubmit)="submitBulkProjection()">
+        <clr-input-container>
+          <label>Days</label>
+          <input clrInput type="number" formControlName="days" min="0" />
+          <clr-control-error *ngIf="bulkForm.get('days')?.hasError('required')">
+            Days is required
+          </clr-control-error>
+          <clr-control-error *ngIf="bulkForm.get('days')?.hasError('min')">
+            Days must be 0 or greater
+          </clr-control-error>
+        </clr-input-container>
+        <button clrButton type="submit" [disabled]="bulkLoading">Show Projection</button>
+      </form>
+
+      <!-- Bulk Loading Spinner -->
+      <clr-spinner *ngIf="bulkLoading"></clr-spinner>
+
+      <!-- Bulk Error Alert -->
+      <clr-alert *ngIf="bulkError" clrAlertType="danger" [clrAlertClosable]="false">
+        <clr-alert-item>
+          <span class="alert-text">{{ bulkError }}</span>
+        </clr-alert-item>
+      </clr-alert>
+
+      <!-- Bulk Projection Results -->
+      <clr-datagrid *ngIf="!bulkLoading && !bulkError && projectedItems.length > 0">
+        <clr-dg-column>Name</clr-dg-column>
+        <clr-dg-column>Sell In</clr-dg-column>
+        <clr-dg-column>Quality</clr-dg-column>
+
+        <clr-dg-row *ngFor="let item of projectedItems" [ngClass]="{ 'text-danger': item.sellIn <= 0 }">
+          <clr-dg-cell>{{ item.name }}</clr-dg-cell>
+          <clr-dg-cell>{{ item.sellIn }}</clr-dg-cell>
+          <clr-dg-cell>{{ item.quality }}</clr-dg-cell>
+        </clr-dg-row>
+      </clr-datagrid>
+    </div>
+
+    <!-- Per-Item Projection Section -->
+    <div class="projection-section" style="margin-top: 40px;">
+      <h3>Single Item Projection</h3>
+      <p>View a specific item projected forward by a number of days</p>
+
+      <!-- Item Projection Form -->
+      <form [formGroup]="itemForm" (ngSubmit)="submitItemProjection()">
+        <clr-input-container>
+          <label>Item Name</label>
+          <input clrInput type="text" formControlName="itemName" placeholder="Enter item name" />
+          <clr-control-error *ngIf="itemForm.get('itemName')?.hasError('required')">
+            Item name is required
+          </clr-control-error>
+        </clr-input-container>
+
+        <clr-input-container>
+          <label>Days</label>
+          <input clrInput type="number" formControlName="days" min="0" />
+          <clr-control-error *ngIf="itemForm.get('days')?.hasError('required')">
+            Days is required
+          </clr-control-error>
+          <clr-control-error *ngIf="itemForm.get('days')?.hasError('min')">
+            Days must be 0 or greater
+          </clr-control-error>
+        </clr-input-container>
+
+        <button clrButton type="submit" [disabled]="itemLoading">Show Item Projection</button>
+      </form>
+
+      <!-- Item Loading Spinner -->
+      <clr-spinner *ngIf="itemLoading"></clr-spinner>
+
+      <!-- Item Error Alert -->
+      <clr-alert *ngIf="itemError" clrAlertType="danger" [clrAlertClosable]="false">
+        <clr-alert-item>
+          <span class="alert-text">{{ itemError }}</span>
+        </clr-alert-item>
+      </clr-alert>
+
+      <!-- Item Projection Results -->
+      <div *ngIf="!itemLoading && !itemError && projectedItem" class="item-result" style="margin-top: 20px;">
+        <div class="result-card">
+          <h4>{{ projectedItem.name }}</h4>
+          <div class="result-values">
+            <p>
+              <strong>Projected Sell In:</strong>
+              <span style="display: inline-block; padding: 2px 8px; background-color: #f0f0f0; border-radius: 3px;">
+                {{ projectedItem.sellIn }}
+              </span>
+            </p>
+            <p>
+              <strong>Projected Quality:</strong>
+              <span style="display: inline-block; padding: 2px 8px; background-color: #f0f0f0; border-radius: 3px;">
+                {{ projectedItem.quality }}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style scoped>
+  .projection-section {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+  }
+
+  .projection-section h3 {
+    margin-top: 0;
+    color: #333;
+  }
+
+  .projection-section p {
+    color: #666;
+    margin: 0 0 20px 0;
+  }
+
+  form {
+    margin-bottom: 20px;
+  }
+
+  clr-input-container {
+    display: block;
+    margin-bottom: 15px;
+  }
+
+  button {
+    margin-top: 10px;
+  }
+
+  .item-result {
+    margin-top: 20px;
+  }
+
+  .result-card {
+    padding: 15px;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+  }
+
+  .result-card h4 {
+    margin: 0 0 15px 0;
+    color: #333;
+  }
+
+  .result-values p {
+    margin: 10px 0;
+  }
+</style>

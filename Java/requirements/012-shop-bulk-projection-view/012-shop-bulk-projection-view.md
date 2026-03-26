@@ -1,6 +1,6 @@
 # 012 — Shop Bulk Projection View
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -96,3 +96,6 @@ Imports needed: `ReactiveFormsModule` from `@angular/forms`.
 |------|--------|------|
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-26 | in-progress | Implementation started - combining with task 011 for unified projection page |
+| 2026-03-26 | implemented | Completed - Unified Projection page with bulk projection form, reactive form validation, ShopService integration, datagrid display of projected inventory, and comprehensive unit tests (15+ tests passing). Per-item and bulk projection features merged into single /projection route with two-section layout. |
+| 2026-03-26 | done | User approved implementation. Unified Projection page with bulk and per-item inventory forecasting. All 35 frontend tests passing. SUMMARY.md created. |

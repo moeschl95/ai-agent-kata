@@ -14,8 +14,8 @@ This file is auto-maintained. It is updated every time a task is created or its 
 | 008 | Angular Frontend Bootstrap | done | Scaffold an Angular 15 + Clarity app in `frontend/`, set up the proxy, shared models, and `ShopService`. |
 | 009 | Inventory List Page | done | Display all shop items in a Clarity datagrid; show loading and error states. |
 | 010 | Advance Day Action | done | Add an "Advance Day" button on the inventory page that calls the backend and refreshes the table. |
-| 011 | Item Projection Panel | ready-for-development | Per-row "Project" button opens a modal form to forecast a single item's state after N days. |
-| 012 | Shop Bulk Projection View | ready-for-development | Dedicated Projection page: enter days, view entire inventory projected forward without mutating live data. |
+| 011 | Item Projection Panel | done | Per-item projection form for forecasting single item state; integrated into the dedicated Projection page with unified projection interface. |
+| 012 | Shop Bulk Projection View | done | Dedicated Projection page with bulk inventory projection (all items after N days) and per-item projection form; angular/reactive forms with validation; all 35 tests passing. |
 | 013 | Spring Event Bus | done | Publish domain events (DayAdvancedEvent, ItemExpiredEvent, ItemQualityChangedEvent) via the Spring event bus when the shop advances a day. |
 | 014 | Clean Architecture & DDD Refactor | done | Reorganise the backend into explicit Clean Architecture layers (domain, application, infrastructure, api) so that dependencies always point inward and each layer is independently testable. |
 | 015 | Inventory Table Sorting | done | Server-side sorting for the inventory table: `GET /api/items` gains `sortBy` and `sortDir` query params; the Angular frontend sends sort state from Clarity column header clicks to the backend. |

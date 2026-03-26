@@ -1,85 +1,77 @@
 # 011 — Item Projection Panel
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
 ## Description
 
 Users want to explore the future state of a single item without actually advancing the shop.
-The Inventory page should allow a user to select (or type) an item name and a number of days,
-then display a side panel or modal showing that item's projected `sellIn` and `quality` after
+The Projection page (a dedicated view separate from the inventory list) should allow a user to select (or type) an item name and a number of days,
+then display a panel showing that item's projected `sellIn` and `quality` after
 those days — without mutating live data. This gives shop keepers an at-a-glance forecast for
-individual items.
+individual items. The per-item projection is accessed from the projection panel, not from the inventory list.
 
 ---
 
 ## Implementation Plan
 
-1. **Write failing component tests (Red)** in `inventory.component.spec.ts`:
-   - `should_showProjectButton_when_itemRowIsRendered` — assert each row in the datagrid has a
-     "Project" button (or link).
-   - `should_openProjectionModal_when_projectButtonIsClicked` — click the "Project" button on
-     the first row; assert a `<clr-modal>` with `[clrModalOpen]="true"` is now in the DOM.
-   - `should_displayProjectedValues_when_projectionSucceeds` — mock `ShopService.projectItem()`
-     to return a `ProjectedItem`; submit the form in the modal; assert the projected `sellIn`
-     and `quality` values are rendered.
-   - `should_closeModal_when_closeButtonIsClicked` — open the modal, click "Close", assert the
-     modal is no longer open.
-   - `should_showValidationError_when_daysIsNegative` — enter `-1` in the days field; assert the
-     form shows a validation error and does not call the service.
+1. **Defer to task 012 (Shop Bulk Projection View) for page structure** — task 012 creates a dedicated Projection page.
+   Task 011 focuses on adding the single-item projection form to that Projection page once 012 is complete.
+
+2. **Write failing component tests (Red)** in a `projection.component.spec.ts` (to be created as part of task 012):
+   - `should_displayItemNameInput_when_projectionPageLoads` — assert the page has an input for selecting/typing item name.
+   - `should_displayDaysInput_when_projectionPageLoads` — assert the page has a number input for days.
+   - `should_displayProjectedValues_when_projectionSucceeds` — mock `ShopService.projectItem()`; submit the form;
+     assert the projected `sellIn` and `quality` values are rendered.
+   - `should_showValidationError_when_daysIsNegative` — enter `-1` in the days field; assert the form shows
+     a validation error and does not call the service.
+   - `should_showValidationError_when_itemNameIsEmpty` — leave item name empty; assert the form shows a
+     validation error.
    Run the tests — they should fail.
 
-2. **Create the Projection form** inside `InventoryComponent`:
-   - Add `projectionModalOpen = false` and `selectedItem: ShopItem | null = null` state.
-   - Add `projectedResult: ProjectedItem | null = null` state.
-   - Add `openProjection(item: ShopItem)` method — sets `selectedItem` and `projectionModalOpen = true`.
-   - Add a Reactive Form group with a single `days` control; apply `Validators.min(0)` and
-     `Validators.required`.
+3. **Create the Projection form** in the Projection component (created as part of task 012):
+   - Add a Reactive Form group with `itemName` and `days` controls.
+   - Apply validators: `Validators.required` and for days `Validators.min(0)`.
    - Add `submitProjection()` method — if form is invalid, mark all fields touched and return early;
-     otherwise call `shopService.projectItem(selectedItem.name, days)` and store the result.
-   - Pipe the subscription through `.pipe(takeUntilDestroyed(this.destroyRef))` (reuse the
-     `DestroyRef` injected in earlier tasks).
+     otherwise call `shopService.projectItem(itemName, days)` and store the result.
+   - Pipe the subscription through `.pipe(takeUntilDestroyed(this.destroyRef))`.
 
-3. **Update the template**:
-   - In each datagrid row, add a small Clarity outline button `<button clrButton type="outline"
-     (click)="openProjection(item)">Project</button>`.
-   - Add a `<clr-modal [(clrModalOpen)]="projectionModalOpen">` containing:
-     - The selected item's name as the modal title.
-     - A `<form>` with a Clarity labeled input for "Days" (bound to the reactive form control).
-     - `<clr-control-error>` shown when the `days` field is invalid.
-     - A "Show Projection" submit button (disabled while form is invalid).
-     - A result section (shown only when `projectedResult` is set) displaying the projected
-       `sellIn` and `quality` values using Clarity badges or simple text.
-     - A "Close" button that sets `projectionModalOpen = false`.
+4. **Update the Projection page template**:
+   - Add a form with labeled inputs for "Item Name" (text) and "Days" (number).
+   - Add `<clr-control-error>` elements shown when fields are invalid.
+   - Add a "Show Projection" submit button (disabled while form is invalid).
+   - Add a result section (shown only when `projectedResult` is set) displaying the projected
+     `sellIn` and `quality` values.
 
-4. **Run tests (Green)** — all five new tests and all previous tests pass.
+5. **Run tests (Green)** — all projection tests and all previous tests pass.
 
-5. **Refactor** — move the reactive form creation to `ngOnInit` rather than a property initializer
-   so it is easier to reset. Extract large template blocks into named `ng-template` fragments if
-   the template grows beyond one screen.
+6. **Refactor** — ensure the form layout and styling are consistent with the rest of the page;
+   extract large template blocks into named `ng-template` fragments if needed.
 
 ---
 
 ## Acceptance Criteria
 
-- [ ] Each inventory row has a "Project" button.
-- [ ] Clicking "Project" on a row opens a Clarity modal pre-filled with that item's name.
-- [ ] The modal contains a "Days" numeric input with validation (must be ≥ 0).
+- [ ] Item name input field (text) with validation (required).
+- [ ] Days numeric input field with validation (must be ≥ 0).
+- [ ] The form shows validation errors when fields are invalid.
 - [ ] Submitting the form calls `GET /api/items/{name}/projection?days=n`.
-- [ ] The projected `sellIn` and `quality` are displayed inside the modal.
-- [ ] The form shows a validation error when `days` is negative; the service is not called.
-- [ ] Clicking "Close" dismisses the modal.
+- [ ] The projected `sellIn` and `quality` are displayed in a result panel.
+- [ ] Form disables submit button while invalid.
 - [ ] All new and existing tests pass.
-- [ ] Every `subscribe()` call is piped through `takeUntilDestroyed(this.destroyRef)`.
+- [ ] Every `subscribe()` call is piped through `takeUntilDestroyed()`.
 - [ ] Java source files are not modified.
+- [ ] Feature is integrated into the dedicated Projection page (task 012), not the inventory list.
 
 ---
 
 ## Notes
 
-Depends on task 009 (Inventory List Page). Task 010 (Advance Day) may be done first but is not
-a hard dependency.
+## Notes
+
+Depends on task 012 (Shop Bulk Projection View). Task 012 creates the Projection page structure;
+task 011 adds the single-item projection form to that page.
 
 Imports needed: `ReactiveFormsModule` from `@angular/forms` in the component's `imports` array.
 
@@ -91,3 +83,9 @@ Imports needed: `ReactiveFormsModule` from `@angular/forms` in the component's `
 |------|--------|------|
 | 2026-03-25 | funnel | Task created |
 | 2026-03-25 | ready-for-development | Approved by user |
+| 2026-03-26 | in-progress | Implementation started |
+| 2026-03-26 | implemented | Completed - projection modal with item forecast capability, form validation, and integration tests all passing |
+| 2026-03-26 | in-progress | User feedback: projection feature should be in dedicated projection panel, not on inventory page. Moving back to in-progress to relocate feature to projection page (task 012). |
+| 2026-03-26 | in-progress | Implementation started |
+| 2026-03-26 | implemented | Completed - Unified Projection page with per-item projection form, reactive form validation, ShopService integration, and comprehensive unit tests (15 tests passing). Feature placed on dedicated /projection route as per architectural feedback. |
+| 2026-03-26 | done | User approved implementation. Per-item projection available on /projection route with bulk projection. All 35 frontend tests passing. |

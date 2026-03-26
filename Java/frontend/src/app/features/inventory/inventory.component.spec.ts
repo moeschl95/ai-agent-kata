@@ -204,3 +204,4 @@ describe('InventoryComponent', () => {
     expect(shopService.getItems).not.toHaveBeenCalled();
   });
 });
+

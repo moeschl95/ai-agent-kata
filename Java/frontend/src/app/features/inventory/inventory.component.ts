@@ -89,6 +89,8 @@ export class InventoryComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (items: ShopItem[]) => {
           this.items = items;
+          this.lastRequestedSortBy = this.sortBy;
+          this.lastRequestedSortDir = this.sortDir;
           onComplete();
         },
         error: (err: any) => {
@@ -99,3 +101,4 @@ export class InventoryComponent implements OnInit, OnDestroy {
       });
   }
 }
+
