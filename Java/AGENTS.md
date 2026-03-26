@@ -153,6 +153,24 @@ See `/arch-decision-records/ADR-PROCESS.md` for detailed guidelines and the ADR 
 
 ---
 
+## Terminal Commands (Windows Environment)
+
+**This is a Windows project. Use PowerShell commands, not Unix commands.**
+
+When running terminal commands:
+- Use `dir` instead of `ls`
+- Use `type` instead of `cat`
+- Use `findstr` instead of `grep`
+- Use `type file.txt | more` instead of `tail -n 50 file.txt`
+- Use `del` instead of `rm`
+- Use `cd` (or `Set-Location`) for navigation
+- Use `.\gradlew.bat` (not `./gradlew`) for Gradle on Windows
+- Use `&` to chain commands or use semicolons in PowerShell
+
+Gradle and Maven tasks work the same, but always use the Windows batch/PowerShell syntax when constructing the command line.
+
+---
+
 ## Project-Specific Constraints
 
 - **Do not modify `Item.java`** — this class is considered an immutable dependency (the "goblin" rule from the kata).
