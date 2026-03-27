@@ -1,6 +1,6 @@
 # 024 — WebSocket STOMP Infrastructure
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -48,3 +48,6 @@ Set up Spring WebSocket with STOMP message broker infrastructure to enable real-
 |------|--------|------|
 | 2026-03-27 | funnel | Task created |
 | 2026-03-27 | ready-for-development | Approved for implementation |
+| 2026-03-27 | in-progress | Implementation started |
+| 2026-03-27 | implemented | Infrastructure complete: WebSocket endpoint, STOMP broker, and AlertMessage DTO; all tests passing |
+| 2026-03-27 | done | Accepted by user |
