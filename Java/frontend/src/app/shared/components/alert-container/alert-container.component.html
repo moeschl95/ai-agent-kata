@@ -1,0 +1,11 @@
+<div class="alert-stack">
+  <clr-alert *ngFor="let alert of alerts"
+             [clrAlertType]="getAlertType(alert.severity)"
+             [clrAlertClosable]="true"
+             (clrAlertClosed)="dismissAlert(alert.id)">
+    <clr-alert-item>
+      <strong>{{ alert.title }}</strong>
+      {{ alert.message }}
+    </clr-alert-item>
+  </clr-alert>
+</div>

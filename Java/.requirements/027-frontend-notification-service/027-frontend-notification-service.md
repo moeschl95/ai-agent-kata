@@ -1,6 +1,6 @@
 # 027 — Frontend Notification Service
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -73,3 +73,6 @@ Create an Angular service (`NotificationService`) that manages STOMP WebSocket c
 |------|--------|------|
 | 2026-03-27 | funnel | Task created |
 | 2026-03-27 | ready-for-development | Approved for implementation |
+| 2026-03-27 | in-progress | Implementation started |
+| 2026-03-27 | implemented | NotificationService and tests complete; 6/6 tests passing |
+| 2026-03-27 | done | Approved by user; SUMMARY.md created |

@@ -27,9 +27,9 @@ This file is auto-maintained. It is updated every time a task is created or its 
 | 021 | Angular 19 Upgrade | done | Upgrade the Angular frontend from version 15 to version 19, updating all peer dependencies (TypeScript, zone.js, CDK, Clarity) in four one-major-version steps via `ng update`. |
 | 022 | Spotless Code Formatting | done | Add the Spotless Gradle plugin to enforce Google Java Format, remove unused imports, and trim trailing whitespace across all backend Java source files. |
 | 023 | Backend Folder Restructure | done | Reorganize into a monorepo with `/backend` and `/frontend` at the same level; move `src/`, `build/`, `gradle/`, `gradlew` files under `backend/`; keep build config at root. |
-| 024 | WebSocket STOMP Infrastructure | ready-for-development | Set up Spring WebSocket with STOMP message broker for real-time communication; includes broker config, WebSocket endpoint, and AlertMessage DTO. |
+| 024 | WebSocket STOMP Infrastructure | done | Set up Spring WebSocket with STOMP message broker for real-time communication; includes broker config, WebSocket endpoint, and AlertMessage DTO. |
 | 025 | Item Expired Event Listener | ready-for-development | Create backend listener for ItemExpiredEvent that publishes critical alerts to `/topic/item.expired` when items reach quality 0. |
 | 026 | Quality Threshold Event Listener | ready-for-development | Create backend listener for ItemQualityChangedEvent that monitors quality thresholds and publishes WARNING/DANGER alerts when items drop below configured values. |
-| 027 | Frontend Notification Service | ready-for-development | Create Angular service managing STOMP WebSocket connections, alert subscriptions, and reactive alert state; exposes alerts$ observable to UI. |
-| 028 | Clarity Alert Container | ready-for-development | Create Angular component rendering real-time alerts using Clarity's alert component with slide-in animations; shows fixed stack in top-right corner. |
+| 027 | Frontend Notification Service | done | Create Angular service managing STOMP WebSocket connections, alert subscriptions, and reactive alert state; exposes alerts$ observable to UI. |
+| 028 | Clarity Alert Container | done | Create Angular component rendering real-time alerts using Clarity's alert component with slide-in animations; shows fixed stack in top-right corner. |
 | 029 | Notification End-to-End Integration | ready-for-development | Integration and E2E testing of the complete notification system; verifies events flow from backend through STOMP to frontend display. |
