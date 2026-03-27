@@ -1,6 +1,6 @@
 # 022 — Spotless Code Formatting & Unused Import Cleanup
 
-**Status:** implemented
+**Status:** done
 
 ---
 
@@ -47,4 +47,4 @@ Spotless uses Google Java Format under the hood for style enforcement. The `remo
 | 2026-03-27 | funnel | Task created |
 | 2026-03-27 | ready-for-development | Approved by user |
 | 2026-03-27 | in-progress | Implementation started |
-| 2026-03-27 | implemented | Spotless plugin configured; all formatting applied and verified |
+| 2026-03-27 | implemented | Spotless plugin configured; all formatting applied and verified || 2026-03-27 | done | Task accepted by user |
