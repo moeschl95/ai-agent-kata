@@ -3,6 +3,7 @@ plugins {
     jacoco
     id("org.springframework.boot") version "3.2.0"
     id("io.spring.dependency-management") version "1.1.4"
+    id("com.diffplug.spotless") version "6.25.0"
 }
 
 repositories {
@@ -12,6 +13,15 @@ repositories {
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+spotless {
+    java {
+        googleJavaFormat()
+        removeUnusedImports()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
 }
 
 group = "com.gildedrose"

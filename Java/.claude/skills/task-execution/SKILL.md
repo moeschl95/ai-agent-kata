@@ -93,15 +93,20 @@ Repeat the cycle for each acceptance criterion until all criteria are met.
 
 When all acceptance criteria are satisfied and the full test suite passes:
 
-1. Update `**Status:**` in the task file to `implemented`.
-2. Append a Changelog row:
+1. **IMPORTANT — Apply code formatting:**
+   - Run `.\gradlew.bat spotlessApply` to auto-format all Java code and remove unused imports.
+   - Run `.\gradlew.bat spotlessCheck` to verify formatting compliance.
+   - Run `.\gradlew.bat test` one final time to confirm all tests still pass after formatting.
+   
+2. Update `**Status:**` in the task file to `implemented`.
+3. Append a Changelog row:
    ```
    | YYYY-MM-DD | implemented | <short summary: what was built, test count> |
    ```
-3. **MANDATORY — update `/requirements/OVERVIEW.md`** — change the `Status` cell for this task
-   to `implemented`. **Do this in the same edit pass as step 1. Both files must be updated
+4. **MANDATORY — update `/requirements/OVERVIEW.md`** — change the `Status` cell for this task
+   to `implemented`. **Do this in the same edit pass as step 3. Both files must be updated
    together. Never leave OVERVIEW.md out of sync with the task file.**
-4. Report to the user: summarise what was built, which files were changed, and how many tests pass.
+5. Report to the user: summarise what was built, which files were changed, and how many tests pass.
    Invite them to review.
 
 ---

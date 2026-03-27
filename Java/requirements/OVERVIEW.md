@@ -24,4 +24,5 @@ This file is auto-maintained. It is updated every time a task is created or its 
 | 018 | Table Descending Sort Support | done | Enable toggle between ascending and descending sort orders in the inventory table; users can click a column header to sort ascending, then click again to sort descending. |
 | 019 | Single Projection Item Dropdown | done | Replace the plain text input in Single Item Projection with a dropdown select list of available inventory items. |
 | 020 | Playwright E2E Tests | ready-for-development | Add Playwright end-to-end tests to the Angular frontend covering key user journeys; tests live under `frontend/e2e/`. |
-| 021 | Angular 19 Upgrade | ready-for-development | Upgrade the Angular frontend from version 15 to version 19, updating all peer dependencies (TypeScript, zone.js, CDK, Clarity) in four one-major-version steps via `ng update`. |
+| 021 | Angular 19 Upgrade | in-progress | Upgrade the Angular frontend from version 15 to version 19, updating all peer dependencies (TypeScript, zone.js, CDK, Clarity) in four one-major-version steps via `ng update`. |
+| 022 | Spotless Code Formatting | implemented | Add the Spotless Gradle plugin to enforce Google Java Format, remove unused imports, and trim trailing whitespace across all backend Java source files. |
