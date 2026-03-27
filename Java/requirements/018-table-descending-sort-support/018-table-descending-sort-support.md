@@ -1,12 +1,14 @@
 # 018 — Table Descending Sort Support
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
 ## Description
 
 Task 015 implemented server-side sorting for the inventory table with `sortBy` and `sortDir` query parameters. However, the current UI only supports ascending sort — users cannot toggle to descending order by clicking column headers again or selecting a sort direction. This task adds the ability to cycle through ascending and descending sort orders, allowing users to sort items in reverse order (e.g., highest quality first, longest sell-in remaining first).
+
+**Note:** This feature was already fully implemented when verified on 2026-03-27. All acceptance criteria met; no additional work required.
 
 ---
 
@@ -67,3 +69,5 @@ Task 015 implemented server-side sorting for the inventory table with `sortBy` a
 |------|--------|------|
 | 2026-03-26 | funnel | Task created |
 | 2026-03-26 | ready-for-development | Approved by user |
+| 2026-03-27 | implemented | Verified: All 15 frontend tests pass + backend integration tests pass; descending sort fully functional with sortDir param; price column non-sortable; acceptance criteria met |
+| 2026-03-27 | done | User accepted; feature already working |
