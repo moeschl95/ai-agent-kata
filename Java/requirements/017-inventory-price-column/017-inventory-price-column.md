@@ -1,6 +1,6 @@
 # 017 — Inventory Price Column
 
-**Status:** implemented
+**Status:** done
 
 ---
 
@@ -71,3 +71,4 @@ The inventory list page (task 009) displays item details but does not show the p
 | 2026-03-26 | ready-for-development | Approved by user |
 | 2026-03-26 | in-progress | Backend: Updated ItemDto, ShopService, ProjectionService to include price; all backend tests passing |
 | 2026-03-26 | implemented | Complete: Backend returns price in API response; Frontend displays price column with currency format; all backend tests passing |
+| 2026-03-27 | done | User accepted implementation |
