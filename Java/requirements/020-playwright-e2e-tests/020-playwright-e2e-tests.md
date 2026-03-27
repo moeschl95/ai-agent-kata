@@ -46,6 +46,8 @@ This complements the existing Karma/Jasmine unit tests with browser-level integr
 - If the backend API is unavailable, tests that depend on real data will fail — API mocking via `page.route()` should be used in E2E tests to avoid the hard dependency on the Spring Boot backend.
 - First-time setup requires `npx playwright install chromium` (downloads ~100 MB).
 
+**Conflict with 021-angular-19-upgrade:** Task 021 upgrades Angular from 15 to 19 and changes the build configuration in `angular.json`. If this task is implemented first, the `webServer` config and any `ng serve` flags may need revisiting after the Angular upgrade lands.
+
 ---
 
 ## Changelog
@@ -54,3 +56,4 @@ This complements the existing Karma/Jasmine unit tests with browser-level integr
 |------|--------|------|
 | 2026-03-27 | funnel | Task created |
 | 2026-03-27 | ready-for-development | Approved by user |
+| 2026-03-27 | ready-for-development | Conflict noted with 021: Angular 19 upgrade changes angular.json build config; Playwright webServer config may need revisiting after upgrade |
