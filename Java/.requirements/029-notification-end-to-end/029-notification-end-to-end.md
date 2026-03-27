@@ -1,6 +1,6 @@
 # 029 — Notification End-to-End Integration
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -62,3 +62,6 @@ Integrate all components of the real-time event notification system end-to-end a
 |------|--------|------|
 | 2026-03-27 | funnel | Task created |
 | 2026-03-27 | ready-for-development | Approved for implementation |
+| 2026-03-27 | in-progress | Implementation started |
+| 2026-03-27 | implemented | 3 backend integration tests + 6 frontend E2E tests + manual test plan; 124 backend tests passing |
+| 2026-03-27 | done | User approved the implementation; system fully functional with all tests passing and WebSocket proxy configured correctly |

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Client } from '@stomp/stompjs';
 
-export type Severity = 'INFO' | 'WARNING' | 'DANGER' | 'CRITICAL';
+export type Severity = 'INFO' | 'WARNING' | 'DANGER' | 'CRITICAL' | 'SUCCESS';
 
 export interface Alert {
   id: string;
@@ -34,6 +34,10 @@ export class NotificationService {
       });
 
       this.stompClient.subscribe('/topic/quality.threshold', (message) => {
+        this.handleAlert(message.body);
+      });
+
+      this.stompClient.subscribe('/topic/day.advanced', (message) => {
         this.handleAlert(message.body);
       });
     };

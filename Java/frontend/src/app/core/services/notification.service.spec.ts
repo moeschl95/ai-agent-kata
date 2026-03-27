@@ -80,6 +80,25 @@ describe('NotificationService', () => {
     });
   });
 
+  it('should_handleSuccessSeverity_when_handleAlertReceivesSuccessAlert', (done) => {
+    const alertJson = JSON.stringify({
+      severity: 'SUCCESS',
+      title: 'Day Advanced',
+      message: 'The shop advanced by one day',
+      timestamp: Date.now()
+    });
+
+    service.handleAlert(alertJson);
+
+    service.alerts$.subscribe((alerts) => {
+      if (alerts.length > 0) {
+        expect(alerts[0].severity).toBe('SUCCESS');
+        expect(alerts[0].title).toBe('Day Advanced');
+        done();
+      }
+    });
+  });
+
   it('should_autoRemoveAlert_after_8seconds', (done) => {
     const alertJson = JSON.stringify({
       severity: 'INFO',

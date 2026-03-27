@@ -32,4 +32,4 @@ This file is auto-maintained. It is updated every time a task is created or its 
 | 026 | Quality Threshold Event Listener | done | Create backend listener for ItemQualityChangedEvent that monitors quality thresholds and publishes WARNING/DANGER alerts when items drop below configured values. |
 | 027 | Frontend Notification Service | done | Create Angular service managing STOMP WebSocket connections, alert subscriptions, and reactive alert state; exposes alerts$ observable to UI. |
 | 028 | Clarity Alert Container | done | Create Angular component rendering real-time alerts using Clarity's alert component with slide-in animations; shows fixed stack in top-right corner. |
-| 029 | Notification End-to-End Integration | ready-for-development | Integration and E2E testing of the complete notification system; verifies events flow from backend through STOMP to frontend display. |
+| 029 | Notification End-to-End Integration | done | Integration and E2E testing of the complete notification system; verifies events flow from backend through STOMP to frontend display. |

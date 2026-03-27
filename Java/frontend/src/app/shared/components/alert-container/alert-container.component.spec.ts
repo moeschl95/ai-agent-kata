@@ -82,6 +82,10 @@ describe('AlertContainerComponent', () => {
     expect(component.getAlertType('WARNING')).toBe('warning');
   });
 
+  it('should_mapSuccessSeverityToSuccessType_when_getAlertTypeIsCalled', () => {
+    expect(component.getAlertType('SUCCESS')).toBe('success');
+  });
+
   it('should_mapInfoSeverityToInfoType_when_getAlertTypeIsCalled', () => {
     expect(component.getAlertType('INFO')).toBe('info');
   });

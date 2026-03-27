@@ -28,8 +28,9 @@ export class AlertContainerComponent implements OnInit {
         return 'error';
       case 'WARNING':
         return 'warning';
+      case 'SUCCESS':
+        return 'success';
       case 'INFO':
-        return 'info';
       default:
         return 'info';
     }
