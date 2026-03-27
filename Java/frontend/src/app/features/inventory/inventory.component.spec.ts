@@ -242,5 +242,24 @@ describe('InventoryComponent', () => {
     // Assert - should not reload on second call
     expect(shopService.getItems).not.toHaveBeenCalled();
   });
+
+  it('should_keepDatagridInDom_when_reloadingAfterInitialLoad', () => {
+    // Arrange - perform initial load so items are populated
+    const mockItems: ShopItem[] = [{ name: 'Aged Brie', sellIn: 5, quality: 20, price: 50 }];
+    shopService.getItems.and.returnValue(of(mockItems));
+    fixture.detectChanges(); // ngOnInit -> load() -> items populated
+
+    // Act - trigger a reload that stays in-flight (NEVER completes)
+    // This simulates the moment after a user clicks a sort column while items are visible
+    shopService.getItems.and.returnValue(NEVER);
+    component.onDatagridRefresh({ sort: { by: 'name', reverse: false } });
+    fixture.detectChanges(); // loading=true, but items are still present
+
+    // Assert - datagrid must remain in DOM while reloading so it is not re-initialized
+    // A re-initialization causes Clarity to fire clrDgRefresh with null sort, which
+    // triggers a second unsorted API request (the bug)
+    const datagrid = fixture.debugElement.query(By.css('clr-datagrid'));
+    expect(datagrid).toBeTruthy();
+  });
 });
 

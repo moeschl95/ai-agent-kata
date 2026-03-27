@@ -2,8 +2,8 @@
   <div class="content-area">
     <h2>Inventory</h2>
 
-    <!-- Loading Spinner -->
-    <clr-spinner *ngIf="loading"></clr-spinner>
+    <!-- Loading Spinner (only shown on initial load before any items are present) -->
+    <clr-spinner *ngIf="loading && items.length === 0"></clr-spinner>
 
     <!-- Error Alert -->
     <clr-alert *ngIf="error" clrAlertType="danger" [clrAlertClosable]="false">
@@ -20,7 +20,11 @@
     </div>
 
     <!-- Datagrid -->
-    <clr-datagrid *ngIf="!loading && !error && items.length > 0" (clrDgRefresh)="onDatagridRefresh($event)">
+    <!-- clrDgLoading is used instead of hiding the datagrid during reloads.
+         Keeping the datagrid in the DOM prevents Clarity from re-initializing it
+         and firing clrDgRefresh with a null sort state, which would cause a
+         duplicate unsorted API request after a sort-triggered reload. -->
+    <clr-datagrid *ngIf="items.length > 0 && !error" [clrDgLoading]="loading" (clrDgRefresh)="onDatagridRefresh($event)">
       <clr-dg-column [clrDgSortBy]="'name'">Name</clr-dg-column>
       <clr-dg-column [clrDgSortBy]="'sellIn'">Sell In</clr-dg-column>
       <clr-dg-column [clrDgSortBy]="'quality'">Quality</clr-dg-column>
