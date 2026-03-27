@@ -27,3 +27,4 @@ This file is auto-maintained. It is updated every time a task is created or its 
 | 021 | Angular 19 Upgrade | done | Upgrade the Angular frontend from version 15 to version 19, updating all peer dependencies (TypeScript, zone.js, CDK, Clarity) in four one-major-version steps via `ng update`. |
 | 022 | Spotless Code Formatting | done | Add the Spotless Gradle plugin to enforce Google Java Format, remove unused imports, and trim trailing whitespace across all backend Java source files. |
 | 023 | Backend Folder Restructure | done | Reorganize into a monorepo with `/backend` and `/frontend` at the same level; move `src/`, `build/`, `gradle/`, `gradlew` files under `backend/`; keep build config at root. |
+| 024 | Java 21 Upgrade | ready-for-development | Upgrade the project from Java 17 to Java 21 to take advantage of newer language features, performance improvements, and long-term support. |
