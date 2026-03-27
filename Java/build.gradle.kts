@@ -15,6 +15,17 @@ java {
     targetCompatibility = JavaVersion.VERSION_17
 }
 
+sourceSets {
+    main {
+        java.srcDir("backend/src/main/java")
+        resources.srcDir("backend/src/main/resources")
+    }
+    test {
+        java.srcDir("backend/src/test/java")
+        resources.srcDir("backend/src/test/resources")
+    }
+}
+
 spotless {
     java {
         googleJavaFormat()

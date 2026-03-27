@@ -9,5 +9,5 @@ bin/
 
 # Gradle
 .gradle
-/build/
+build/
 

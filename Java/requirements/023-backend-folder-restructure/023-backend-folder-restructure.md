@@ -1,6 +1,6 @@
 # 023 — Backend Folder Restructure
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -48,17 +48,17 @@ Root/
 
 ## Acceptance Criteria
 
-- [ ] `src/` moved to `backend/src/`
-- [ ] `build/` moved to `backend/build/`
-- [ ] `gradlew` and `gradlew.bat` moved to `backend/`
-- [ ] `gradle/` directory moved to `backend/gradle/`
-- [ ] Build configuration updated to reference new paths
-- [ ] All unit tests discover and run correctly
-- [ ] All tests pass
-- [ ] Frontend code unchanged
-- [ ] `gradlew.bat test` (from root) invokes backend tests successfully
-- [ ] Gradle Wrapper still works as expected
-- [ ] No dead links or orphaned references in config files
+- [x] `src/` moved to `backend/src/`
+- [x] `build/` moved to `backend/build/`
+- [x] `gradlew` and `gradlew.bat` moved to `backend/`
+- [x] `gradle/` directory moved to `backend/gradle/`
+- [x] Build configuration updated to reference new paths
+- [x] All unit tests discover and run correctly
+- [x] All tests pass
+- [x] Frontend code unchanged
+- [x] `gradlew.bat test` (from root) invokes backend tests successfully
+- [x] Gradle Wrapper still works as expected
+- [x] No dead links or orphaned references in config files
 
 ---
 
@@ -111,3 +111,6 @@ Root/
 |------|--------|------|
 | 2026-03-27 | funnel | Task created; ADR-002 approved and documented |
 | 2026-03-27 | ready-for-development | Task approved and ready for implementation |
+| 2026-03-27 | in-progress | Implementation started |
+| 2026-03-27 | implemented | Restructuring complete: moved src/, build/, gradle/, gradlew to backend/; created root-level wrapper scripts; updated sourceSets in build.gradle.kts; all tests passing |
+| 2026-03-27 | done | Task approved and completed
