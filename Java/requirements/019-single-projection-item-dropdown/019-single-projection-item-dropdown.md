@@ -1,6 +1,6 @@
 # 019 — Single Projection Item Dropdown
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -58,3 +58,6 @@ Replace the plain text input field in the Single Item Projection section with a 
 |------|--------|------|
 | 2026-03-26 | funnel | Task created |
 | 2026-03-26 | ready-for-development | Approved by user |
+| 2026-03-27 | in-progress | Implementation started |
+| 2026-03-27 | implemented | Dropdown implemented; items loaded from backend on component init; native HTML select with Clarity styling; validation and error handling included; all 42 tests passing |
+| 2026-03-27 | done | Approved by user |

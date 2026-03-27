@@ -24,6 +24,8 @@ export class ProjectionComponent implements OnInit, OnDestroy {
   itemLoading = false;
   itemError: string | null = null;
   projectedItem: ProjectedItem | null = null;
+  availableItemNames: string[] = [];
+  itemsLoadError: string | null = null;
 
   private subscriptions = new Subscription();
 
@@ -37,10 +39,27 @@ export class ProjectionComponent implements OnInit, OnDestroy {
       itemName: ['', Validators.required],
       days: [0, [Validators.required, Validators.min(0)]]
     });
+    this.loadAvailableItems();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  private loadAvailableItems(): void {
+    const sub = this.shopService.getItems().subscribe({
+      next: (items) => {
+        this.availableItemNames = items.map(item => item.name);
+        this.itemsLoadError = null;
+        this.itemForm.get('itemName')?.enable();
+      },
+      error: (err: any) => {
+        this.itemsLoadError = 'Failed to load available items';
+        this.itemForm.get('itemName')?.disable();
+        console.error('Failed to load available items:', err);
+      }
+    });
+    this.subscriptions.add(sub);
   }
 
   submitBulkProjection(): void {

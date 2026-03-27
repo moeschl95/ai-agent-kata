@@ -53,13 +53,24 @@
 
       <!-- Item Projection Form -->
       <form [formGroup]="itemForm" (ngSubmit)="submitItemProjection()">
-        <clr-input-container>
+        <clr-select-container>
           <label>Item Name</label>
-          <input clrInput type="text" formControlName="itemName" placeholder="Enter item name" />
+          <select clrSelect formControlName="itemName">
+            <option value="" disabled selected>Select an item</option>
+            <option *ngFor="let itemName of availableItemNames" [value]="itemName">
+              {{ itemName }}
+            </option>
+          </select>
           <clr-control-error *ngIf="itemForm.get('itemName')?.hasError('required')">
             Item name is required
           </clr-control-error>
-        </clr-input-container>
+        </clr-select-container>
+
+        <clr-alert *ngIf="itemsLoadError" clrAlertType="warning" [clrAlertClosable]="false" style="margin-bottom: 15px;">
+          <clr-alert-item>
+            <span class="alert-text">{{ itemsLoadError }}</span>
+          </clr-alert-item>
+        </clr-alert>
 
         <clr-input-container>
           <label>Days</label>

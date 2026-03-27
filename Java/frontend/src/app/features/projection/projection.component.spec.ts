@@ -13,7 +13,7 @@ describe('ProjectionComponent', () => {
   let shopService: jasmine.SpyObj<ShopService>;
 
   beforeEach(async () => {
-    const shopServiceSpy = jasmine.createSpyObj('ShopService', ['projectAll', 'projectItem']);
+    const shopServiceSpy = jasmine.createSpyObj('ShopService', ['projectAll', 'projectItem', 'getItems']);
 
     await TestBed.configureTestingModule({
       imports: [ProjectionComponent, BrowserAnimationsModule],
@@ -21,6 +21,8 @@ describe('ProjectionComponent', () => {
     }).compileComponents();
 
     shopService = TestBed.inject(ShopService) as jasmine.SpyObj<ShopService>;
+    // Set default return for getItems to prevent errors in tests that don't expect it
+    shopService.getItems.and.returnValue(of([]));
     fixture = TestBed.createComponent(ProjectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -147,10 +149,10 @@ describe('ProjectionComponent', () => {
 
   it('should_displayItemNameInput_when_pageLoads', () => {
     // Arrange/Act - component already loaded
-    const itemNameInput = fixture.debugElement.query(By.css('input[formControlName="itemName"]'));
+    const itemNameSelect = fixture.debugElement.query(By.css('select[formControlName="itemName"]'));
 
     // Assert
-    expect(itemNameInput).toBeTruthy();
+    expect(itemNameSelect).toBeTruthy();
   });
 
   it('should_showValidationError_when_itemNameIsEmpty', (done) => {
@@ -273,5 +275,87 @@ describe('ProjectionComponent', () => {
       expect(dangerRows.length).toBe(2);
       done();
     });
+  });
+
+  // ===== ITEM DROPDOWN TESTS =====
+
+  it('should_loadAvailableItems_when_componentInitializes', (done) => {
+    // Arrange
+    const mockItems = [
+      { name: 'Aged Brie', sellIn: 5, quality: 20, price: 50 },
+      { name: 'Sulfuras', sellIn: -1, quality: 80, price: 100 }
+    ];
+    shopService.getItems.and.returnValue(of(mockItems));
+
+    // Act
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    // Assert
+    fixture.whenStable().then(() => {
+      expect(shopService.getItems).toHaveBeenCalled();
+      expect(component.availableItemNames).toEqual(['Aged Brie', 'Sulfuras']);
+      done();
+    });
+  });
+
+  it('should_displayItemsInDropdown_when_itemsAreLoaded', (done) => {
+    // Arrange
+    const mockItems = [
+      { name: 'Aged Brie', sellIn: 5, quality: 20, price: 50 },
+      { name: 'Sulfuras', sellIn: -1, quality: 80, price: 100 }
+    ];
+    shopService.getItems.and.returnValue(of(mockItems));
+    component.ngOnInit();
+
+    // Act
+    fixture.detectChanges();
+
+    // Assert
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      const options = fixture.debugElement.queryAll(By.css('select[formControlName="itemName"] option'));
+      expect(options.length).toBe(3); // 1 placeholder + 2 items
+      expect(options[0].nativeElement.textContent).toContain('Select an item');
+      expect(options[1].nativeElement.textContent).toContain('Aged Brie');
+      expect(options[2].nativeElement.textContent).toContain('Sulfuras');
+      done();
+    });
+  });
+
+  it('should_disableDropdown_when_itemsFailToLoad', (done) => {
+    // Arrange
+    shopService.getItems.and.returnValue(throwError(() => new Error('API error')));
+
+    // Act
+    component.ngOnInit();
+    fixture.detectChanges();
+
+    // Assert
+    fixture.whenStable().then(() => {
+      fixture.detectChanges();
+      expect(component.itemsLoadError).toBe('Failed to load available items');
+      expect(component.itemForm.get('itemName')?.disabled).toBe(true);
+      done();
+    });
+  });
+
+  it('should_submitWithSelectedItem_when_dropdownIsUsed', () => {
+    // Arrange
+    const mockItems = [
+      { name: 'Aged Brie', sellIn: 5, quality: 20, price: 50 }
+    ];
+    const mockProjectedItem: ProjectedItem = { name: 'Aged Brie', sellIn: 2, quality: 23, price: 50 };
+    shopService.getItems.and.returnValue(of(mockItems));
+    shopService.projectItem.and.returnValue(of(mockProjectedItem));
+    component.ngOnInit();
+
+    // Act
+    component.itemForm.get('itemName')?.setValue('Aged Brie');
+    component.itemForm.get('days')?.setValue(3);
+    component.submitItemProjection();
+
+    // Assert
+    expect(shopService.projectItem).toHaveBeenCalledWith('Aged Brie', 3);
   });
 });
