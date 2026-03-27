@@ -1,8 +1,8 @@
 package com.gildedrose.infrastructure.event;
 
-import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
 
 class AlertMessageTest {
 

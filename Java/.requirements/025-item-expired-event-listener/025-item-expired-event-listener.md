@@ -1,6 +1,6 @@
 # 025 — Item Expired Event Listener
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -57,3 +57,5 @@ Create an event listener that subscribes to `ItemExpiredEvent` and publishes a c
 |------|--------|------|
 | 2026-03-27 | funnel | Task created |
 | 2026-03-27 | ready-for-development | Approved for implementation |
+| 2026-03-27 | in-progress | Implementation started |
+| 2026-03-27 | implemented | ItemExpiredEventListener complete with STOMP publishing; 2 tests passing || 2026-03-27 | done | Accepted by user |
