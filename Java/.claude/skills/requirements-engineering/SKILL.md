@@ -2,7 +2,7 @@
 name: requirements-engineering
 description: >
   Capture, structure, and approve new requirements and tasks for this project. Creates structured
-  task files under /requirements/, assigns incrementing 3-digit task IDs, writes a description and
+  task files under /.requirements/, assigns incrementing 3-digit task IDs, writes a description and
   implementation plan, checks for conflicts with open tasks, and guides the task through the
   approval gate (funnel → ready-for-development). Use this skill whenever a user mentions a
   requirement, a feature request, a bug to fix, a task to plan, or says things like "I want to...",
@@ -12,12 +12,12 @@ description: >
   explicitly — if they are describing work to be planned, use this skill.
   NOTE: once a task is ready-for-development and the user asks to implement it, use the
   task-execution skill instead. NOTE: if the user is describing a bug or broken behaviour in the
-  running app, use the bug-workflow skill instead — bugs are tracked under /bugs/, not /requirements/.
+  running app, use the bug-workflow skill instead — bugs are tracked under /.bugs/, not /.requirements/.
 ---
 
 # Requirements Engineering & Task Creation
 
-This skill turns raw requirements into tracked, structured task files under `/requirements/` and
+This skill turns raw requirements into tracked, structured task files under `/.requirements/` and
 walks them through the approval gate. The scope ends once a task reaches `ready-for-development`.
 Implementation, status updates beyond that point, and SUMMARY.md creation are handled by the
 `task-execution` skill.
@@ -54,7 +54,7 @@ New requirement described by user
 
 ## Step 1 — Determine the next task ID
 
-Scan the `/requirements/` folder for sub-directories whose names start with a 3-digit number
+Scan the `/.requirements/` folder for sub-directories whose names start with a 3-digit number
 (e.g. `001-short-title/`). The next ID is the highest existing number + 1, zero-padded to 3 digits.
 If no task folders exist yet, start at `001`.
 
@@ -89,7 +89,7 @@ requirements/
     └── <ID>-<short-title>.md
 ```
 
-After creating the file, **immediately update `/requirements/OVERVIEW.md`** — add a new row to the
+After creating the file, **immediately update `/.requirements/OVERVIEW.md`** — add a new row to the
 table with the new task's `ID`, `Title`, `Status` (`funnel`), and a one-sentence `Summary`.
 
 Use the template below. Fill in every section — do not leave placeholders.
@@ -201,7 +201,7 @@ Append a new row to the Changelog table:
 | YYYY-MM-DD | ready-for-development | Approved by user |
 ```
 
-Update `/requirements/OVERVIEW.md` — change the `Status` cell for this task from `funnel` to
+Update `/.requirements/OVERVIEW.md` — change the `Status` cell for this task from `funnel` to
 `ready-for-development`.
 
 Confirm to the user: "Task `<ID>-<short-title>` is now **ready-for-development**. Let me know when
@@ -235,7 +235,7 @@ For statuses beyond `ready-for-development` (`in-progress`, `implemented`, `done
 ## Listing tasks
 
 When the user asks to see all tasks, list current requirements or asks "what's the status", scan
-`/requirements/` for task folders and produce a summary table:
+`/.requirements/` for task folders and produce a summary table:
 
 ```
 | ID  | Title                    | Status                  |
@@ -253,9 +253,9 @@ Read the status from each task file's `**Status:**` line.
 
 - **One task file per requirement.** Do not bundle unrelated requirements into one task.
 - **IDs never change.** Once a folder is created with an ID, that ID is permanent.
-- **Do not modify `/requirements/GildedRoseRequirements.md`** — that is the original kata spec, not a task file.
+- **Do not modify `/.requirements/GildedRoseRequirements.md`** — that is the original kata spec, not a task file.
 - **Always show the task content** to the user before asking for approval — never silently create a file and just report a path.
 - **Status lives in the file.** The single source of truth is the `**Status:**` line inside the task `.md` file.
 - **Changelog is append-only.** Every status change, revision, or significant decision must be recorded as a new row in the Changelog table (with today's date, the new status, and a short note). Never edit or delete an existing changelog row.
 - **Always run the conflict check.** When creating a new task, always scan all non-`done` task files before presenting the task for approval. Skipping the conflict check is not permitted, even if it seems unlikely there are conflicts.
-- **Always update `/requirements/OVERVIEW.md`** — whenever a new task is created or its funnel/approval status changes, update the table row. The table columns are: `ID`, `Title`, `Status`, and `Summary`.
+- **Always update `/.requirements/OVERVIEW.md`** — whenever a new task is created or its funnel/approval status changes, update the table row. The table columns are: `ID`, `Title`, `Status`, and `Summary`.

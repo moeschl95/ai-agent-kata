@@ -1,6 +1,6 @@
 # 021 — Angular 19 Upgrade
 
-**Status:** ready-for-development
+**Status:** implemented
 
 ---
 
@@ -87,3 +87,5 @@ builder targets and any custom webpack plugins (none currently in this project).
 | 2026-03-27 | funnel | Task created |
 | 2026-03-27 | funnel | Revised: confirmed @clr/angular v17.12.2 supports Angular 19; Clarity upgrade steps removed |
 | 2026-03-27 | ready-for-development | Approved by user |
+| 2026-03-27 | in-progress | Implementation started by agent |
+| 2026-03-27 | implemented | Angular 19 upgrade completed: all 4 phases done (15→16→17→18→19), builds pass, tests pass. Fixed angular.json: browserTarget→buildTarget in serve config |

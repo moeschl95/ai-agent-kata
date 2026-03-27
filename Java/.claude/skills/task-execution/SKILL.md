@@ -48,14 +48,14 @@ ready-for-development  (set by user via requirements-engineering skill)
 
 Before writing any code:
 
-1. Read the task file (`requirements/<ID>-<short-title>/<ID>-<short-title>.md`) to understand the
+1. Read the task file (`.requirements/<ID>-<short-title>/<ID>-<short-title>.md`) to understand the
    description, implementation plan, and acceptance criteria.
 2. Update `**Status:**` in the task file to `in-progress`.
 3. Append a Changelog row:
    ```
    | YYYY-MM-DD | in-progress | Implementation started |
    ```
-4. **MANDATORY — update `/requirements/OVERVIEW.md`** — change the `Status` cell for this task
+4. **MANDATORY — update `/.requirements/OVERVIEW.md`** — change the `Status` cell for this task
    to `in-progress`. **Do this in the same edit pass as step 2. Both files must be updated before
    writing any code. Never leave OVERVIEW.md out of sync with the task file.**
 
@@ -103,7 +103,7 @@ When all acceptance criteria are satisfied and the full test suite passes:
    ```
    | YYYY-MM-DD | implemented | <short summary: what was built, test count> |
    ```
-4. **MANDATORY — update `/requirements/OVERVIEW.md`** — change the `Status` cell for this task
+4. **MANDATORY — update `/.requirements/OVERVIEW.md`** — change the `Status` cell for this task
    to `implemented`. **Do this in the same edit pass as step 3. Both files must be updated
    together. Never leave OVERVIEW.md out of sync with the task file.**
 5. Report to the user: summarise what was built, which files were changed, and how many tests pass.
@@ -122,7 +122,7 @@ Transition to `done`:
    ```
    | YYYY-MM-DD | done | Accepted by user |
    ```
-3. **MANDATORY — update `/requirements/OVERVIEW.md`** — change the `Status` cell for this task
+3. **MANDATORY — update `/.requirements/OVERVIEW.md`** — change the `Status` cell for this task
    to `done`. **Do this in the same edit pass as step 1. Never leave OVERVIEW.md out of sync
    with the task file.**
 4. Create `requirements/<ID>-<short-title>/SUMMARY.md` using the template below.
@@ -136,7 +136,7 @@ Move back to `in-progress`:
    ```
    | YYYY-MM-DD | in-progress | Returned: <short summary of feedback> |
    ```
-3. **MANDATORY — update `/requirements/OVERVIEW.md`** — change the `Status` cell for this task
+3. **MANDATORY — update `/.requirements/OVERVIEW.md`** — change the `Status` cell for this task
    to `in-progress`. **Do this in the same edit pass as step 1. Never leave OVERVIEW.md out of
    sync with the task file.**
 4. Address the feedback, then return to Step 2.
@@ -145,7 +145,7 @@ Move back to `in-progress`:
 
 ## SUMMARY.md template
 
-Create this file at `requirements/<ID>-<short-title>/SUMMARY.md` when the task moves to `done`.
+Create this file at `.requirements/<ID>-<short-title>/SUMMARY.md` when the task moves to `done`.
 Fill every section with real content — do not leave template text.
 
 ```markdown
@@ -220,5 +220,5 @@ Transition rules:
   `@Configuration` classes, not in `GildedRose.java`, `Item.java`, or the updater hierarchy.
 - **Changelog is append-only.** Never edit or delete an existing row. Add a new row for every
   status change or significant decision.
-- **Always update `/requirements/OVERVIEW.md`** whenever the task status changes.
+- **Always update `/.requirements/OVERVIEW.md`** whenever the task status changes.
 - **Run the full test suite** (`gradlew test`) before marking a task `implemented`.

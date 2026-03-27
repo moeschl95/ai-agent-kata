@@ -81,11 +81,11 @@ Never write production code without a corresponding failing test written first. 
 
 ## Task Workflow (MANDATORY)
 
-When working on a task from the `/requirements/` folder:
+When working on a task from the `/.requirements/` folder:
 
-1. **Before starting** — update the `**Status:**` line in the task file to `in-progress`, append a Changelog row, **and update `/requirements/OVERVIEW.md`** to reflect the new status.
-2. **When finished** — update `**Status:**` to `implemented`, append a Changelog row, **and update `/requirements/OVERVIEW.md`**.
-3. **OVERVIEW.md must always be in sync** — every status change must be reflected in both the task file and `/requirements/OVERVIEW.md` in the same edit. Never update one without the other.
+1. **Before starting** — update the `**Status:**` line in the task file to `in-progress`, append a Changelog row, **and update `/.requirements/OVERVIEW.md`** to reflect the new status.
+2. **When finished** — update `**Status:**` to `implemented`, append a Changelog row, **and update `/.requirements/OVERVIEW.md`**.
+3. **OVERVIEW.md must always be in sync** — every status change must be reflected in both the task file and `/.requirements/OVERVIEW.md` in the same edit. Never update one without the other.
 4. **Never skip the Changelog** — every status change must be recorded as a new row (date, new status, short note). The Changelog is append-only; never edit or delete an existing row.
 5. **Never self-approve** — only the user can move a task to `ready-for-development` or `done`.
 6. **When the user accepts and moves a task to `done`** — create a `SUMMARY.md` in the task folder summarising what was implemented and any problems addressed during development. See the `task-execution` skill for the exact template.
@@ -102,11 +102,11 @@ See the `requirements-engineering` skill for task creation and the approval work
 
 ## Bug Workflow (MANDATORY)
 
-When a bug is reported, track it under the `/bugs/` folder using the same Changelog discipline as tasks.
+When a bug is reported, track it under the `/.bugs/` folder using the same Changelog discipline as tasks.
 
 Status lifecycle: `reported` → `in-progress` → `implemented` → `fixed`
 
-1. **On report** — create a bug file in `/bugs/<ID>-<short-title>/`, status `reported`, Changelog row added.
+1. **On report** — create a bug file in `/.bugs/<ID>-<short-title>/`, status `reported`, Changelog row added.
 2. **Before fixing** — update status to `in-progress`, append a Changelog row.
 3. **When fix is complete** — update status to `implemented`, document root cause and fix, append a Changelog row. Report to the user and invite review.
 4. **Never skip the Changelog** — every status change must be recorded. The Changelog is append-only.
@@ -142,14 +142,14 @@ An ADR is needed for:
 
 1. **Ask permission first** — Do not assume approval is delegated. Explain the rationale, articulate trade-offs, and present alternatives.
 2. **Wait for explicit approval** — Only proceed after the user approves the architecture change.
-3. **Create the ADR** — Once approved, document it in `/arch-decision-records/ADR-<ID>-<kebab-case-title>.md` with context, decision, consequences, alternatives, implementation details, and references.
+3. **Create the ADR** — Once approved, document it in `/.arch-decision-records/ADR-<ID>-<kebab-case-title>.md` with context, decision, consequences, alternatives, implementation details, and references.
 4. **Implement** — Only after the ADR is documented and approved, proceed with the implementation.
 
 ### Core Rule
 
 **Do not implement unilateral architecture changes.** Always consult and get explicit approval before changing the architecture.
 
-See `/arch-decision-records/ADR-PROCESS.md` for detailed guidelines and the ADR filing process.
+See `/.arch-decision-records/ADR-PROCESS.md` for detailed guidelines and the ADR filing process.
 
 ---
 

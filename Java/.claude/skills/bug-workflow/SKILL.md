@@ -2,7 +2,7 @@
 name: bug-workflow
 description: >
   Report, track, investigate, fix, and close bugs in this project. Creates structured bug report
-  files under /bugs/, assigns incrementing 3-digit IDs, documents root cause and fix, and drives
+  files under /.bugs/, assigns incrementing 3-digit IDs, documents root cause and fix, and drives
   the bug through its lifecycle: reported → in-progress → implemented → fixed → done.
   Use this skill whenever the user reports a bug, describes something that isn't working, says
   "this is broken", "I found a bug", "it's not rendering correctly", "an error appeared", or
@@ -52,7 +52,7 @@ User reports a bug
 
 ### Determine the next bug ID
 
-Scan `/bugs/` for sub-directories whose names start with a 3-digit number (e.g. `001-short-title/`).
+Scan `/.bugs/` for sub-directories whose names start with a 3-digit number (e.g. `001-short-title/`).
 The next ID is the highest existing number + 1, zero-padded to 3 digits. Start at `001` if none exist.
 
 > Never reuse or skip IDs. IDs are permanent once assigned.
@@ -238,7 +238,7 @@ Transition rules:
 
 ## Listing bugs
 
-When the user asks "what bugs are open?", "show me all bugs", or similar, scan `/bugs/` for bug
+When the user asks "what bugs are open?", "show me all bugs", or similar, scan `/.bugs/` for bug
 folders and produce a summary table:
 
 ```

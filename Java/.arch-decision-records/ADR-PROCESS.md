@@ -52,7 +52,7 @@ Only after the ADR is approved and documented, proceed with implementation.
 ## ADR File Structure
 
 ```
-arch-decision-records/
+.arch-decision-records/
 ├── ADR-001-<decision-title>.md
 ├── ADR-002-<decision-title>.md
 ├── ADR-PROCESS.md  (this file)

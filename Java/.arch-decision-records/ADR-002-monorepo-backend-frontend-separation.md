@@ -31,9 +31,9 @@ Root
 ├── build.gradle.kts             ← Java build config
 ├── settings.gradle.kts
 ├── gradle.properties
-├── arch-decision-records/       ← Repo-level metadata
-├── requirements/
-├── bugs/
+├── .arch-decision-records/       ← Repo-level metadata
+├── .requirements/
+├── .bugs/
 ├── AGENTS.md
 ├── README.md
 └── ...

@@ -41,7 +41,7 @@ Root/
 ├── build.gradle.kts   ← Stays at root
 ├── settings.gradle.kts
 ├── gradle.properties
-└── ... (metadata: arch-decision-records/, requirements/, bugs/, AGENTS.md, README.md)
+└── ... (metadata: .arch-decision-records/, .requirements/, .bugs/, AGENTS.md, README.md)
 ```
 
 ---
