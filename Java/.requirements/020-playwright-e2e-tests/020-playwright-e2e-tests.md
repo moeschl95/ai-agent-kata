@@ -1,6 +1,6 @@
 # 020 — Playwright E2E Tests
 
-**Status:** ready-for-development
+**Status:** done
 
 ---
 
@@ -57,3 +57,6 @@ This complements the existing Karma/Jasmine unit tests with browser-level integr
 | 2026-03-27 | funnel | Task created |
 | 2026-03-27 | ready-for-development | Approved by user |
 | 2026-03-27 | ready-for-development | Conflict noted with 021: Angular 19 upgrade changes angular.json build config; Playwright webServer config may need revisiting after upgrade |
+| 2026-03-27 | in-progress | Implementation started |
+| 2026-03-27 | implemented | Playwright setup complete: config added, 4 E2E tests created, all tests pass; existing 42 Jasmine unit tests unaffected |
+| 2026-03-27 | done | Accepted by user |

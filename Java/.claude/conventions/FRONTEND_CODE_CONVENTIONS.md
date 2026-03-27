@@ -82,3 +82,20 @@ export class MyComponent implements OnInit {
 
 > Prefer `takeUntilDestroyed(this.destroyRef)` over the manual `Subject`/`ngOnDestroy` pattern.
 > Both are acceptable if you must support older Angular; be consistent within a component.
+
+---
+
+## 5. E2E Test File Naming
+
+End-to-end test files **must** follow the naming convention:
+
+```
+<feature>.e2e.spec.ts
+```
+
+Examples:
+- `inventory.e2e.spec.ts` — E2E tests for the inventory feature
+- `projection.e2e.spec.ts` — E2E tests for the projection feature
+- `advance-day.e2e.spec.ts` — E2E tests for the advance day feature
+
+All E2E test files must live in the `frontend/e2e/` directory.
