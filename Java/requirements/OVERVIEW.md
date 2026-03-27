@@ -26,3 +26,4 @@ This file is auto-maintained. It is updated every time a task is created or its 
 | 020 | Playwright E2E Tests | ready-for-development | Add Playwright end-to-end tests to the Angular frontend covering key user journeys; tests live under `frontend/e2e/`. |
 | 021 | Angular 19 Upgrade | in-progress | Upgrade the Angular frontend from version 15 to version 19, updating all peer dependencies (TypeScript, zone.js, CDK, Clarity) in four one-major-version steps via `ng update`. |
 | 022 | Spotless Code Formatting | implemented | Add the Spotless Gradle plugin to enforce Google Java Format, remove unused imports, and trim trailing whitespace across all backend Java source files. |
+| 023 | Backend Folder Restructure | funnel | Reorganize into a monorepo with `/backend` and `/frontend` at the same level; move `src/`, `build/`, `gradle/`, `gradlew` files under `backend/`; keep build config at root. | |
