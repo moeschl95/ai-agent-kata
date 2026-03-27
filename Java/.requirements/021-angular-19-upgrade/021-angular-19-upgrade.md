@@ -1,6 +1,6 @@
 # 021 — Angular 19 Upgrade
 
-**Status:** implemented
+**Status:** done
 
 ---
 
